@@ -1,0 +1,134 @@
+{
+  "name": "Younis Ayoub",
+  "backgroundColor": "#0b0f17",
+  "foregroundColor": "#f8fafc",
+  "components": {
+    "loading": {
+      "text": "${name} Portfolio",
+      "foregroundColor": "#f8fafc"
+    },
+    "nav": {
+      "header": "${name} Portfolio",
+      "theme": "singularity",
+      "sections": [
+        { "label": "Projects", "href": "#projects" },
+        { "label": "Skills", "href": "#skills" },
+        { "label": "Experience", "href": "#experience" },
+        { "label": "Contact", "href": "#contact" }
+      ],
+      "links": [
+        {
+          "label": "GitHub",
+          "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg",
+          "src": "https://github.com"
+        },
+        {
+          "label": "LinkedIn",
+          "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg",
+          "src": "https://linkedin.com"
+        },
+        {
+          "label": "X",
+          "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/x.svg",
+          "src": "https://x.com"
+        }
+      ]
+    },
+    "body": {
+      "theme": "singularity",
+      "sections": [
+        {
+          "type": "hero",
+          "id": "hero",
+          "foregroundColor": "#f8fafc",
+          "title": "Frontend Software Engineer & UI Architect",
+          "bio": "Building high-performance UI systems, custom component architectures, and dynamic React/TypeScript infrastructure.",
+          "status": {
+            "text": "Available for full-time & contract roles",
+            "active": true
+          },
+          "cta": [
+            {
+              "id": "Primary",
+              "label": "Explore Projects",
+              "href": "#projects"
+            },
+            { "id": "Secondary", "label": "View Resume", "href": "/resume.pdf" }
+          ],
+          "stack": {
+            "type": "marquee",
+            "id": "skills",
+            "content": [
+              {
+                "text": "Github",
+                "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg",
+                "href": "#contact"
+              },
+              "Next.js",
+              "TypeScript",
+              "Tailwind CSS",
+              "GSAP",
+              "SQL"
+            ]
+          }
+        },
+        {
+          "type": "projects",
+          "id": "projects",
+          "content": [
+            {
+              "name": "Dyvix UI",
+              "role": "Founder & Lead Architect",
+              "description": "Headless, JSON-Driven animated component UI library.",
+              "points": [
+                "Scaled to 320+ PRs with 62+ open-source contributors.",
+                "Led the migration from JavaScript to a fully TypeScript codebase.",
+                "Built a dual API architecture supporting config-driven and composable workflows.",
+                "Built a custom multilayered L1/L2/L3 hardware-style caching protocol to optimize multi-level JSON lookups and CSS variables with a 94% performance improvement.",
+                "Architected dynamic Smart Props splitting to prevent wrapper animation conflicts.",
+                "Engineered an automatic TypeScript generator alongside CSS variable extraction and injection pipelines.",
+                "Architected JSON-driven documentation playgrounds."
+              ],
+              "stack": ["typescript", "react", "node", "css3", "$Open Source"],
+              "links": [
+                {
+                  "link": "https://github.com/younisdev/dyvix-ui",
+                  "icon": "$idevicon-github-original",
+                  "active": true
+                },
+                {
+                  "link": "https://www.npmjs.com/package/dyvix-ui",
+                  "icon": "$idevicon-npm-original-wordmark colored"
+                },
+                {
+                  "link": "https://dyvix-ui.vercel.app/",
+                  "icon": "static/dyvix-logo.png"
+                }
+              ],
+              "img": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg"
+            },
+            {
+              "name": "Inteligram",
+              "role": "Full-Stack Developer",
+              "points": [
+                "Built a custom multi-metric feed ranking algorithm to dynamically score, weigh and surface content according to user engagement.",
+                "Architected secure JWT authentication pipelines and REST APIs using Django REST Framework.",
+                "Integrated WebSockets and infinite scroll loading for zero-latency real-time content delivery."
+              ],
+              "description": "Full-stack social media platform built with dynamic feed ranking and real-time updates",
+              "stack": ["javascript", "react", "css3", "django", "djangorest"],
+              "link": [
+                {
+                  "link": "https://github.com/younisdev/inteligram",
+                  "icon": "$idevicon-github-original"
+                }
+              ],
+              "img": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg"
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {}
+  }
+}

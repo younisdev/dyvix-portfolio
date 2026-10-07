@@ -1,0 +1,26 @@
+[
+  {
+    "theme": "singularity",
+    "properties": {
+      "color": "#f8fafc",
+      "font-family": "Geist, system-ui, sans-serif",
+      "font-size": "0.9rem",
+      "font-weight": "500",
+      "border-width": "1px",
+      "border-style": "solid",
+      "border-radius": "12px",
+      "border-color": "rgba(185, 3, 226, 0.3)",
+      "bg": "rgba(11, 15, 23, 0.8)",
+      "box-shadow": "0 4px 24px rgba(185, 3, 226, 0.15)",
+      "hover-color": "#ffffff",
+      "hover-border-width": "1px",
+      "hover-border-style": "solid",
+      "hover-border-radius": "12px",
+      "hover-border-color": "#b903e2",
+      "hover-bg": "rgba(185, 3, 226, 0.08)",
+      "hover-box-shadow": "0 6px 30px rgba(185, 3, 226, 0.3)",
+      "hover-transform": "translateY(-1px)",
+      "transition": "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)"
+    }
+  }
+]
