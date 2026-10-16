@@ -14,6 +14,8 @@ interface DyvixAdminNav {
 export default function AdminNav({ items }: DyvixAdminNav) {
   return (
     <DyvixNav
+      animation={null}
+      microanimation={"glitch"}
       brand={{ label: "Dyvix Protofolio Admin" }}
       items={items}
       overrides={{

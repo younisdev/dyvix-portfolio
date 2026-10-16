@@ -1,5 +1,5 @@
-import AdminAuthShell from "./components/AdminAuthShell";
+import AdminAuthShell from "../../components/admin/AdminAuthShell";
 
 export default function AdminPage() {
-  return <AdminAuthShell />;
+  return <AdminAuthShell>heyy</AdminAuthShell>;
 }

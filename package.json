@@ -15,10 +15,12 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "bcryptjs": "^3.0.3",
     "dotenv": "^18.0.5",
     "drizzle-orm": "^0.45.3",
-    "dyvix-ui": "^0.5.5",
+    "dyvix-ui": "^0.5.6",
     "gsap": "^3.15.0",
+    "jose": "^6.2.12",
     "next": "^16.3.5",
     "postgres": "^3.4.9",
     "prettier": "^3.9.6",
@@ -27,6 +29,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20.19.43",
     "@types/react": "^19",
     "@types/react-dom": "^19",
