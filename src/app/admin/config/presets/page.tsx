@@ -6,7 +6,7 @@ import { deletePreset, getPresetData } from "@/service";
 import { DyvixButton, dyvixToast } from "dyvix-ui";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import Home from "@/app/page";
+import CompileDefinitions from "@/components/admin/config/preset/DefinitionCompiler";
 
 export interface Preset {
   id: string;
@@ -19,7 +19,7 @@ export interface Preset {
 }
 
 export default function PresetPage() {
-  const [mode, SetMod] = React.useState<"View" | "Create" | "Edit">("View");
+  const [mode, SetMod] = React.useState<"View" | "Create" | "Edit">("Create");
   const [presets, SetPresets] = React.useState<Preset[]>([]);
   const [reload, setReload] = React.useState<boolean | null>(null);
   const [activeConfig, SetActiveConfig] = React.useState<any>(null);
@@ -166,6 +166,14 @@ export default function PresetPage() {
         </div>
       )}
 
+      {mode === "Create" && (
+        <div className="preset-editor-container">
+          <div className="preset-control-panel">
+            <CompileDefinitions />
+          </div>
+          <div className="preset-playground"></div>
+        </div>
+      )}
     </AdminAuthShell>
   );
 }

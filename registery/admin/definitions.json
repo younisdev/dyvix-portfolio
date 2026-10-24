@@ -1,0 +1,44 @@
+{
+  "name": "string | required",
+  "backgroundColor": "color",
+  "foregroundColor": "color",
+  "components": {
+    "loading": {
+      "text": "string",
+      "foregroundColor": "color"
+    },
+    "nav": {
+      "header": "string",
+      "theme": "theme",
+      "sections": "Array<{ label: string, href: string }>",
+      "links": "Array<{ label: string, icon: string, src: string }>"
+    },
+    "body": {
+      "theme": "theme",
+      "sections": {
+        "hero": {
+          "type": "hero",
+          "id": "string",
+          "foregroundColor": "color",
+          "title": "string",
+          "bio": "string",
+          "status": {
+            "text": "string",
+            "active": "boolean"
+          },
+          "cta": "Array<{ id: string, label: string, href: string }>",
+          "stack": {
+            "type": "marquee",
+            "id": "string",
+            "content": "Array<string | { text: string, icon: string, href: string }>"
+          }
+        },
+        "projects": {
+          "type": "projects",
+          "id": "string",
+          "content": "Array<{ name: string, role: string, description: string, points: Array<string>, stack: Array<string>, links: Array<{ link: string, icon: string, active?: boolean }>, img: string }>"
+        }
+      }
+    }
+  }
+}
