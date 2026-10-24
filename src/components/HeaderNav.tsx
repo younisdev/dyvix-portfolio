@@ -1,6 +1,6 @@
 "use client";
 
-import { DyvixNav } from "dyvix-ui";
+import { DyvixCommandMenu, DyvixNav } from "dyvix-ui";
 // Use SJC later
 
 import navThemes from "../../registery/nav/theme.json";
@@ -134,6 +134,7 @@ export default function HeaderNav({ config, tl }: headerProps) {
           )}
         </div>
       </DyvixNav>
+      <DyvixCommandMenu showOnRender={false} />
     </header>
   );
 }

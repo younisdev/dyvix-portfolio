@@ -40,15 +40,14 @@ export default function AdminAuthShell({ children }: AdminAuthShellProps) {
   useEffect(() => {
     async function checkExistingAuth() {
       try {
-      const result = await getAuthenticatedUser();
+        const result = await getAuthenticatedUser();
 
-      if (result) {
-        setAuth(true);
+        if (result) {
+          setAuth(true);
+        }
+      } finally {
+        setIsLoadingAuth(false);
       }
-    }
-    finally {
-      setIsLoadingAuth(false);
-    }
     }
 
     checkExistingAuth();
@@ -99,7 +98,7 @@ export default function AdminAuthShell({ children }: AdminAuthShellProps) {
             : [{ label: "Home", onClick: () => {} }]
         }
       />
-      {!isAuthenticated  ? (
+      {!isAuthenticated ? (
         <DyvixModal
           onSubmit={(data) => {
             HandleSubmitData(data);
