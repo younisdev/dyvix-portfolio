@@ -2,6 +2,7 @@
   "name": "string | required",
   "backgroundColor": "color",
   "foregroundColor": "color",
+  "hey": "Array<string>",
   "components": {
     "loading": {
       "text": "string",

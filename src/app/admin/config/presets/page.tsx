@@ -169,7 +169,7 @@ export default function PresetPage() {
       {mode === "Create" && (
         <div className="preset-editor-container">
           <div className="preset-control-panel">
-            <CompileDefinitions />
+            <CompileDefinitions/>
           </div>
           <div className="preset-playground"></div>
         </div>
