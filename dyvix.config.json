@@ -8,61 +8,71 @@
       "foregroundColor": "#f8fafc"
     },
     "nav": {
-      "header": "${name} Portfolio",
-      "theme": "singularity",
-      "sections": [
-        { "label": "Projects", "href": "#projects" },
-        { "label": "Skills", "href": "#skills" },
-        { "label": "Experience", "href": "#experience" },
-        { "label": "Contact", "href": "#contact" }
-      ],
       "links": [
         {
-          "label": "GitHub",
+          "src": "https://github.com",
           "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg",
-          "src": "https://github.com"
+          "label": "GitHub"
         },
         {
-          "label": "LinkedIn",
+          "src": "https://linkedin.com",
           "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg",
-          "src": "https://linkedin.com"
+          "label": "LinkedIn"
         },
         {
-          "label": "X",
+          "src": "https://x.com",
           "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/x.svg",
-          "src": "https://x.com"
+          "label": "X"
+        }
+      ],
+      "theme": "singularity",
+      "header": "${name} Portfolio",
+      "sections": [
+        {
+          "href": "#projects",
+          "label": "Projects"
+        },
+        {
+          "href": "#skills",
+          "label": "Skills"
+        },
+        {
+          "href": "#experience",
+          "label": "Experience"
+        },
+        {
+          "href": "#contact",
+          "label": "Contact"
         }
       ]
     },
     "body": {
       "theme": "singularity",
-      "sections": [
-        {
-          "type": "hero",
+      "sections": {
+        "hero": {
           "id": "hero",
-          "foregroundColor": "#f8fafc",
-          "title": "Frontend Software Engineer & UI Architect",
           "bio": "Building high-performance UI systems, custom component architectures, and dynamic React/TypeScript infrastructure.",
-          "status": {
-            "text": "Available for full-time & contract roles",
-            "active": true
-          },
           "cta": [
             {
               "id": "Primary",
-              "label": "Explore Projects",
-              "href": "#projects"
+              "href": "#projects",
+              "label": "Explore Projects"
             },
-            { "id": "Secondary", "label": "View Resume", "href": "/resume.pdf" }
+            {
+              "id": "Secondary",
+              "href": "/resume.pdf",
+              "label": "View Resume"
+            }
           ],
+          "type": "hero",
           "stack": {
-            "type": "marquee",
             "id": "skills",
+            "type": "marquee",
             "content": [
               {
-                "text": "Github",
+                "href": "#contact",
                 "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg",
-                "href": "#contact"
+                "text": "Github"
               },
               "Next.js",
               "TypeScript",
@@ -70,16 +80,38 @@
               "GSAP",
               "SQL"
             ]
-          }
+          },
+          "title": "Frontend Software Engineer & UI Architect",
+          "status": {
+            "text": "Available for full-time & contract roles",
+            "active": true
+          },
+          "foregroundColor": "#f8fafc"
         },
-        {
-          "type": "projects",
+        "projects": {
           "id": "projects",
+          "type": "projects",
           "content": [
             {
+              "img": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg",
               "name": "Dyvix UI",
               "role": "Founder & Lead Architect",
-              "description": "Headless, JSON-Driven animated component UI library.",
+              "links": [
+                {
+                  "icon": "$idevicon-github-original",
+                  "link": "https://github.com/younisdev/dyvix-ui",
+                  "active": true
+                },
+                {
+                  "icon": "$idevicon-npm-original-wordmark colored",
+                  "link": "https://www.npmjs.com/package/dyvix-ui"
+                },
+                {
+                  "icon": "static/dyvix-logo.png",
+                  "link": "https://dyvix-ui.vercel.app/"
+                }
+              ],
+              "stack": ["typescript", "react", "node", "css3", "$Open Source"],
               "points": [
                 "Scaled to 320+ PRs with 62+ open-source contributors.",
                 "Led the migration from JavaScript to a fully TypeScript codebase.",
@@ -89,46 +121,29 @@
                 "Engineered an automatic TypeScript generator alongside CSS variable extraction and injection pipelines.",
                 "Architected JSON-driven documentation playgrounds."
               ],
-              "stack": ["typescript", "react", "node", "css3", "$Open Source"],
-              "links": [
-                {
-                  "link": "https://github.com/younisdev/dyvix-ui",
-                  "icon": "$idevicon-github-original",
-                  "active": true
-                },
-                {
-                  "link": "https://www.npmjs.com/package/dyvix-ui",
-                  "icon": "$idevicon-npm-original-wordmark colored"
-                },
-                {
-                  "link": "https://dyvix-ui.vercel.app/",
-                  "icon": "static/dyvix-logo.png"
-                }
-              ],
-              "img": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg"
+              "description": "Headless, JSON-Driven animated component UI library."
             },
             {
+              "img": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg",
+              "link": [
+                {
+                  "icon": "$idevicon-github-original",
+                  "link": "https://github.com/younisdev/inteligram"
+                }
+              ],
               "name": "Inteligram",
               "role": "Full-Stack Developer",
+              "stack": ["javascript", "react", "css3", "django", "djangorest"],
               "points": [
                 "Built a custom multi-metric feed ranking algorithm to dynamically score, weigh and surface content according to user engagement.",
                 "Architected secure JWT authentication pipelines and REST APIs using Django REST Framework.",
                 "Integrated WebSockets and infinite scroll loading for zero-latency real-time content delivery."
               ],
-              "description": "Full-stack social media platform built with dynamic feed ranking and real-time updates",
-              "stack": ["javascript", "react", "css3", "django", "djangorest"],
-              "link": [
-                {
-                  "link": "https://github.com/younisdev/inteligram",
-                  "icon": "$idevicon-github-original"
-                }
-              ],
-              "img": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg"
+              "description": "Full-stack social media platform built with dynamic feed ranking and real-time updates"
             }
           ]
         }
-      ]
-    },
-    "footer": {}
+      }
+    }
   }
 }

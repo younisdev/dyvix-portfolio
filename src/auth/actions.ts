@@ -7,7 +7,7 @@ import { verifyAuthToken } from "./jwt";
 export async function handleLoginAction(username: string, password: string) {
   try {
     const result = await loginUser(username, password);
-    await SaveToken(result);
+    await SaveToken(result, username);
     return { success: true, data: result };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -21,17 +21,17 @@ export async function handleRegisterAction(
 ) {
   try {
     const result = await registerUser(username, email, password);
-    await SaveToken(result);
+    await SaveToken(result, username);
     return { success: true, data: result };
   } catch (error: any) {
     return { success: false, error: error.message };
   }
 }
 
-export async function SaveToken(token: string) {
+export async function SaveToken(token: string, username: string) {
   const cookieStore = await cookies();
 
-  cookieStore.set("dyvix-token", token, {
+  cookieStore.set("dyvix-token", JSON.stringify({ username, token }), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -52,10 +52,11 @@ export async function deleteToken() {
 }
 
 export async function getAuthenticatedUser() {
-  const token = await getToken();
+  const tokenCookie = await getToken();
 
-  if (!token) return null;
+  if (!tokenCookie) return null;
 
+  const { token } = JSON.parse(tokenCookie);
   const payload = await verifyAuthToken(token);
 
   return payload;

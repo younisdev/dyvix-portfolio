@@ -238,3 +238,22 @@ body {
   background: rgba(255, 255, 255, 0.03);
   width: 60vw;
 }
+.editor-toolbox {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  background: rgba(24, 32, 60, 0.85);
+  justify-content: center;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  border-radius: 2rem;
+  padding: 20px;
+  width: 90vw;
+  margin: 0 auto;
+  transition: all 0.5s ease-in-out;
+}
+.editor-toolbox:hover {
+  transform: scale(1.01);
+  border: 1px solid rgba(187, 248, 252, 0.2);
+}

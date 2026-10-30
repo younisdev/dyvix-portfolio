@@ -81,7 +81,7 @@ export default function AdminAuthShell({ children }: AdminAuthShellProps) {
     }
   }
   return (
-    <>
+    <div style={{ background: "#0b0f17", width: "100vw", height: "100vh" }}>
       <DyvixToastContainer
         position="top-right"
         duration={3000}
@@ -110,6 +110,6 @@ export default function AdminAuthShell({ children }: AdminAuthShellProps) {
       ) : (
         children
       )}
-    </>
+    </div>
   );
 }

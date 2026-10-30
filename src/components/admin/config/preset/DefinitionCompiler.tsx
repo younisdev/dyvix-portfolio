@@ -232,11 +232,17 @@ function variantLabel(variant: ShapeVariant, index: number): string {
 
 export default function CompileDefinitions({
   defaults,
+  onChange,
 }: {
   defaults?: Record<string, any> | null;
+  onChange: Function;
 }) {
   const [result, SetResult] = React.useState<Record<string, any>>({});
-  console.log(result)
+
+  React.useEffect(() => {
+    onChange(result);
+  }, [result]);
+
   return (
     <div
       style={{ padding: "20px", color: "#f8fafc", fontFamily: "sans-serif" }}
@@ -361,7 +367,7 @@ function RenderDefinitionValue({
   );
 }
 
-function RenderStringInput({
+export function RenderStringInput({
   fieldKey,
   val,
   tree,

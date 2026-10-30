@@ -22,11 +22,11 @@ function getComponent(type: string) {
 export default function BodyCompiler({ config, tl }: bodyProps) {
   const sectionConfig = config?.["sections"];
   const theme = config?.["theme"];
-
+  console.log(sectionConfig);
   return (
     <main>
-      {sectionConfig.map(
-        (section: { type: string; id: string; [key: string]: any }) => {
+      {Object.values(sectionConfig as Record<string, { type: string; id: string; [key: string]: any }>)?.map(
+        (section) => {
           const SectionComponent = getComponent(section.type);
           if (!SectionComponent) {
             console.warn(`Component type "${section.type}" is not registered.`);
