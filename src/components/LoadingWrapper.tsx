@@ -73,7 +73,7 @@ export default function LoadingWrapper({
     <>
       {stage === "loading" ? (
         <div
-          className="flex flex-wrap items-center justify-center w-screen min-h-screen"
+          className="flex flex-wrap items-center justify-center w-full h-full min-h-[250px]"
           ref={loadingDivRef}
         >
           <p className="text-blue-500 font-mono text-3xl font-bold -tracking-tight select-none transition-all duration-300 hover:[text-shadow:0_0_32px_rgba(37,99,235,0.8)]">

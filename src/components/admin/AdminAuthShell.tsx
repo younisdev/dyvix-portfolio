@@ -8,6 +8,7 @@ import {
   handleLoginAction,
   handleRegisterAction,
 } from "@/auth/actions";
+import ClientBodyStyling from "@/app/client";
 
 interface AdminAuthShellProps {
   children?: React.ReactNode;
@@ -81,7 +82,8 @@ export default function AdminAuthShell({ children }: AdminAuthShellProps) {
     }
   }
   return (
-    <div style={{ background: "#0b0f17", width: "100%", height: "100%" }}>
+    <div>
+      <ClientBodyStyling backgroundColor={"#0b0f17"} />
       <DyvixToastContainer
         position="top-right"
         duration={3000}

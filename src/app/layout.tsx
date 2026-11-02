@@ -47,15 +47,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const config = await getActiveConfig();
-  const backgroundColor = config["backgroundColor"] || "#17160b";
   return (
     <html lang="en" className={`h-full antialiased`}>
-      <body
-        className="min-h-full flex flex-col"
-        style={{ "--background": backgroundColor } as React.CSSProperties}
-      >
-        {children}
-      </body>
+      <body className="h-full flex w-full flex-col">{children}</body>
     </html>
   );
 }

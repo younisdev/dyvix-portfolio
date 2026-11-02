@@ -3,23 +3,27 @@ import { getActiveConfig } from "./layout";
 import LoadingWrapper from "@/components/LoadingWrapper";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import BodyCompiler from "@/components/BodyCompiler";
+import ClientBodyStyling from "./client";
 
-const spaceGrotesk = Space_Grotesk({
+export const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+export const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
 });
 
 export default async function Home() {
   const config = await getActiveConfig();
+  const backgroundColor = config["backgroundColor"] || "#17160b";
+
   return (
     <div
-      className={`w-screen min-h-screen ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
+      className={`w-full h-full ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
+      <ClientBodyStyling backgroundColor={backgroundColor} />
       <LoadingWrapper config={config?.["components"]?.["loading"]}>
         <HeaderNav config={config?.["components"]?.["nav"]} />
         <BodyCompiler config={config?.["components"]?.["body"]} />

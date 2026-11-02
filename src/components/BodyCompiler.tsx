@@ -25,21 +25,24 @@ export default function BodyCompiler({ config, tl }: bodyProps) {
   console.log(sectionConfig);
   return (
     <main>
-      {Object.values(sectionConfig as Record<string, { type: string; id: string; [key: string]: any }>)?.map(
-        (section) => {
-          const SectionComponent = getComponent(section.type);
-          if (!SectionComponent) {
-            console.warn(`Component type "${section.type}" is not registered.`);
-            return null;
-          }
+      {Object.values(
+        sectionConfig as Record<
+          string,
+          { type: string; id: string; [key: string]: any }
+        >,
+      )?.map((section) => {
+        const SectionComponent = getComponent(section.type);
+        if (!SectionComponent) {
+          console.warn(`Component type "${section.type}" is not registered.`);
+          return null;
+        }
 
-          return (
-            <Suspense key={section.id} fallback={`Loading...`}>
-              <SectionComponent data={section} theme={theme} tl={tl} />
-            </Suspense>
-          );
-        },
-      )}
+        return (
+          <Suspense key={section.id} fallback={`Loading...`}>
+            <SectionComponent data={section} theme={theme} tl={tl} />
+          </Suspense>
+        );
+      })}
     </main>
   );
 }

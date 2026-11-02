@@ -12,9 +12,10 @@ import Image from "next/image";
 interface headerProps {
   config: Record<string, any>;
   tl?: gsap.core.Timeline | null;
+  debug?: boolean;
 }
 
-export default function HeaderNav({ config, tl }: headerProps) {
+export default function HeaderNav({ config, tl, debug = false }: headerProps) {
   const navRef = React.useRef<HTMLDivElement>(null);
   const brandRef = React.useRef<HTMLDivElement>(null);
   const linksRef = React.useRef<(HTMLDivElement | null)[]>([]);
@@ -88,7 +89,17 @@ export default function HeaderNav({ config, tl }: headerProps) {
           "--dyvix-nav-margin": "1rem auto",
           ...overrides,
         }}
-        style={{ top: "10px", left: "50%", transform: "translateX(-50%)" }}
+        style={
+          debug
+            ? {
+                top: "10px",
+                left: 0,
+                right: 0,
+                width: "max-content",
+                maxWidth: "calc(100% - 1rem)",
+              }
+            : { top: "10px", left: "50%", transform: "translateX(-50%)" }
+        }
         theme={null}
         animation={"drop"}
       >

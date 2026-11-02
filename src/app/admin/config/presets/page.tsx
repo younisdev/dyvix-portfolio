@@ -14,6 +14,7 @@ import gsap from "gsap";
 import CompileDefinitions, {
   RenderStringInput,
 } from "@/components/admin/config/preset/DefinitionCompiler";
+import PlaygroundPreview from "@/components/admin/config/preset/PlaygroundPreview";
 
 export interface Preset {
   id?: string;
@@ -394,7 +395,9 @@ export default function PresetPage() {
                 }}
               />
             </div>
-            <div className="preset-playground"></div>
+            <div className="preset-playground">
+              <PlaygroundPreview config={result} />
+            </div>
           </div>
         )}
       </div>
