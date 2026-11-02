@@ -62,7 +62,7 @@ export default function HeaderNav({ config, tl, debug = false }: headerProps) {
     const UpdateScrollMargin = () => {
       const computedStyle = window.getComputedStyle(ele);
       const marginTop = parseFloat(computedStyle.marginTop) || 0;
-      const suggestedHeight = ele.offsetHeight + marginTop - 20;
+      const suggestedHeight = ele.offsetHeight + marginTop + 25;
       document.documentElement.style.setProperty(
         "--dyvix-scroll-margin-top",
         `${suggestedHeight}px`,

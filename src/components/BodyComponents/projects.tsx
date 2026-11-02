@@ -42,7 +42,7 @@ export default function BodyProjectsSection({
       className="flex flex-wrap flex-col justify-center items-center gap-2 mt-32 w-full"
       style={{ color: foregroundColor }}
     >
-      <h2 className="flex flex-wrap w-[90%]" id="projects">
+      <h2 className="flex flex-wrap w-[90%] scroll-id-pointer" id="projects" >
         <span className="section-header text-4xl font-bold">Projects</span>
       </h2>
       {content?.map((entry, index) => (

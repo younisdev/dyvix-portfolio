@@ -49,7 +49,6 @@ body {
   position: relative;
   margin-bottom: 4rem;
   color: var(--dyvix-header-color, inherit);
-  scroll-margin-top: var(--dyvix-scroll-margin-top, 100px);
 }
 .section-header::after {
   content: "";
@@ -68,6 +67,9 @@ body {
 .section-header:hover::after {
   width: 80%;
   opacity: 1;
+}
+.scroll-id-pointer {
+  scroll-margin-top: var(--dyvix-scroll-margin-top, 100px);
 }
 .project-item {
   background: var(--dyvix-project-bg, rgba(255, 255, 255, 0.03));

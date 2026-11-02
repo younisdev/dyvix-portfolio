@@ -200,6 +200,7 @@ export default function BodyHeroSection({
               {...elementProps}
               id={data?.stack?.id}
               ref={skillsContainerRef}
+              className="scroll-id-pointer"
             >
               {data.stack?.content.map(
                 (
