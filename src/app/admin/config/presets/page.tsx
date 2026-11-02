@@ -7,6 +7,7 @@ import {
   getPresetData,
   perfomSavePreset,
   performPresetActivation,
+  performPresetDeactivation,
 } from "@/service";
 import { DyvixButton, DyvixLabel, dyvixToast } from "dyvix-ui";
 import { useGSAP } from "@gsap/react";
@@ -183,7 +184,16 @@ export default function PresetPage() {
     const result = await performPresetActivation(presetId);
     const status = result.success ? "success" : "error";
     dyvixToast[status](
-      !result?.success ? result?.data : "Preset Updated Succcesfully!",
+      !result?.success ? result?.data : "Preset Activated Succcesfully!",
+    );
+    setRefreshTrigger((prev) => prev + 1);
+  };
+
+  const DeactivatePreset = async (presetId: string) => {
+    const result = await performPresetDeactivation(presetId);
+    const status = result.success ? "success" : "error";
+    dyvixToast[status](
+      !result?.success ? result?.data : "Preset Deactivated Succcesfully!",
     );
     setRefreshTrigger((prev) => prev + 1);
   };
@@ -315,20 +325,23 @@ export default function PresetPage() {
                       )}
                     </span>
                     <div className="preset-actions">
-                      {!preset.isActive && (
-                        <DyvixButton
-                          onClick={() => {
-                            if (!preset.id) return;
-                            ActivatePreset(preset.id);
-                          }}
-                          overrides={{
-                            "--dyvix-button-bg": "green",
-                            "--dyvix-button-border-style": "none",
-                          }}
-                        >
-                          Set Active
-                        </DyvixButton>
-                      )}
+                      <DyvixButton
+                        onClick={() => {
+                          if (!preset.id) return;
+
+                          preset.isActive
+                            ? DeactivatePreset(preset.id)
+                            : ActivatePreset(preset.id);
+                        }}
+                        overrides={{
+                          "--dyvix-button-bg": !preset.isActive
+                            ? "#10b981"
+                            : "#ef4444",
+                          "--dyvix-button-border-style": "none",
+                        }}
+                      >
+                        {!preset.isActive ? "Set Active" : "Set Inactive"}
+                      </DyvixButton>
                       <DyvixButton
                         onClick={() => {
                           setSelectedPreset(preset);

@@ -128,6 +128,23 @@ export async function performPresetActivation(presetId: string) {
     return { success: false, data: "Failed to activate Preset" };
   }
 }
+export async function performPresetDeactivation(presetId: string) {
+  try {
+    const [updatedPreset] = await db
+      .update(configProfiles)
+      .set({ isActive: false, updatedAt: new Date() })
+      .where(eq(configProfiles.id, presetId))
+      .returning();
+
+    if (!updatedPreset) {
+      return { success: false, data: "Preset not found." };
+    }
+    return { success: true, data: updatedPreset };
+  } catch (err) {
+    console.error("Error Deactivating Preset", err);
+    return { success: false, data: "Failed to deactivate Preset" };
+  }
+}
 
 export async function deactivePresets() {
   try {
