@@ -18,7 +18,7 @@
     "bcryptjs": "^3.0.3",
     "dotenv": "^18.0.5",
     "drizzle-orm": "^0.45.3",
-    "dyvix-ui": "^0.5.7",
+    "dyvix-ui": "^0.5.8",
     "gsap": "^3.15.0",
     "jose": "^6.2.12",
     "next": "^16.3.5",
@@ -41,6 +41,12 @@
   },
   "overrides": {
     "glob": "^10.4.6",
-    "esbuild": "^0.25.0"
+    "cross-spawn": "^7.0.5",
+    "minimatch": "^10.0.1"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.18.20": true
   }
 }
