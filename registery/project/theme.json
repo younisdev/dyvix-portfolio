@@ -22,5 +22,51 @@
       "hover-transform": "translateY(-1px)",
       "transition": "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)"
     }
+  },
+  {
+    "theme": "cyberpunk",
+    "properties": {
+      "color": "#00ffcc",
+      "font-family": "monospace",
+      "font-size": "0.875rem",
+      "font-weight": "600",
+      "border-width": "1px",
+      "border-style": "solid",
+      "border-radius": "4px",
+      "border-color": "#ff007f",
+      "bg": "rgba(10, 10, 15, 0.9)",
+      "box-shadow": "0 0 16px rgba(255, 0, 127, 0.25)",
+      "hover-color": "#ffffff",
+      "hover-border-width": "1px",
+      "hover-border-style": "solid",
+      "hover-border-radius": "4px",
+      "hover-border-color": "#00ffcc",
+      "hover-bg": "rgba(0, 255, 204, 0.08)",
+      "hover-box-shadow": "0 0 25px rgba(0, 255, 204, 0.5)",
+      "transition": "all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)"
+    }
+  },
+  {
+    "theme": "minimal-glass",
+    "properties": {
+      "color": "black",
+      "font-family": "Geist, system-ui, sans-serif",
+      "font-size": "0.875rem",
+      "font-weight": "500",
+      "border-width": "1px",
+      "border-style": "solid",
+      "border-radius": "16px",
+      "border-color": "rgba(0, 0, 0, 0.12)",
+      "bg": "rgba(255, 255, 255, 0.75)",
+      "box-shadow": "0 4px 20px rgba(0, 0, 0, 0.04)",
+      "hover-color": "#000000",
+      "hover-border-width": "1px",
+      "hover-border-style": "solid",
+      "hover-border-radius": "16px",
+      "hover-border-color": "rgba(0, 0, 0, 0.25)",
+      "hover-bg": "rgba(255, 255, 255, 0.95)",
+      "hover-box-shadow": "0 8px 30px rgba(0, 0, 0, 0.08)",
+      "transition": "all 0.25s ease"
+    }
   }
 ]

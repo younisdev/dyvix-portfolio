@@ -1,4 +1,5 @@
-import { DyvixLabel } from "dyvix-ui";
+import projectThemes from "../../../registery/project/theme.json";
+import { parseThemePropertyconfig } from "@/app/utils";
 import Image from "next/image";
 
 interface ContentProp {
@@ -35,23 +36,31 @@ export default function BodyProjectsSection({
 }: ProjectsProps) {
   const foregroundColor =
     data?.foregroundColor || globalForegroundColor || "#f8fafc";
+
+  const projectThemesThemeProperties = projectThemes.find(
+    (ele) => ele.theme === theme,
+  )?.properties;
+  const projectThemesOverrides = parseThemePropertyconfig(
+    projectThemesThemeProperties as Record<string, any>,
+    "project",
+  );
   const content = data?.content;
   return (
     <section
       id="project-section"
       className="flex flex-wrap flex-col justify-center items-center gap-2 mt-32 w-full"
-      style={{ color: foregroundColor }}
+      style={{ color: foregroundColor, ...projectThemesOverrides }}
     >
-      <h2 className="flex flex-wrap w-[90%] scroll-id-pointer" id="projects" >
+      <h2 className="flex flex-wrap w-[90%] scroll-id-pointer" id="projects">
         <span className="section-header text-4xl font-bold">Projects</span>
       </h2>
       {content?.map((entry, index) => (
         <div key={`proj-${index}`} className="w-[90%] p-4">
-          <div className="project-item flex flex-col md:flex-row gap-6 p-6 items-start">
+          <div className="project-item flex flex-col md:flex-row gap-6 p-6 items-center">
             {entry?.img && (
-              <div className="flex justify-center items-center relative w-full h-64 md:w-64">
+              <div className="relative w-full h-64 md:w-64 md:min-w-64 shrink-0 overflow-hidden rounded-lg">
                 <Image
-                  className="object-cover"
+                  className="object-contain"
                   src={entry.img}
                   alt={entry?.name || "Project preview"}
                   fill
