@@ -1,6 +1,7 @@
 import projectThemes from "../../../registery/project/theme.json";
 import { parseThemePropertyconfig } from "@/app/utils";
 import Image from "next/image";
+import StackIcons from "../StackIcons";
 
 interface ContentProp {
   name: string;
@@ -74,6 +75,13 @@ export default function BodyProjectsSection({
               <ul className="project-points flex flex-col gap-2 p-6">
                 {entry?.points?.map((point, i) => (
                   <li key={`point-${i}`}>{point}</li>
+                ))}
+              </ul>
+              <ul className="project-stacks flex flex-row gap-4 p-2 items-center">
+                {entry?.stack?.map((item, i) => (
+                  <li key={`stack-${i}`}>
+                    <StackIcons name={item} />
+                  </li>
                 ))}
               </ul>
             </div>

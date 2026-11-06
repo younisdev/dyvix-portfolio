@@ -111,7 +111,7 @@
                   "link": "https://dyvix-ui.vercel.app/"
                 }
               ],
-              "stack": ["typescript", "react", "node", "css3", "$Open Source"],
+              "stack": ["typescript", "react", "node", "css", "$Open Source"],
               "points": [
                 "Scaled to 320+ PRs with 62+ open-source contributors.",
                 "Led the migration from JavaScript to a fully TypeScript codebase.",
@@ -125,7 +125,7 @@
             },
             {
               "img": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg",
-              "link": [
+              "links": [
                 {
                   "icon": "$idevicon-github-original",
                   "link": "https://github.com/younisdev/inteligram"
@@ -133,7 +133,7 @@
               ],
               "name": "Inteligram",
               "role": "Full-Stack Developer",
-              "stack": ["javascript", "react", "css3", "django", "djangorest"],
+              "stack": ["javascript", "react", "css", "django", "djangorest"],
               "points": [
                 "Built a custom multi-metric feed ranking algorithm to dynamically score, weigh and surface content according to user engagement.",
                 "Architected secure JWT authentication pipelines and REST APIs using Django REST Framework.",

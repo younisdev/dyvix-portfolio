@@ -134,6 +134,13 @@ body {
   font-size: 0.875rem;
   line-height: 1.5;
 }
+.project-item .project-info .project-stacks li {
+  transition: all 0.4s ease-in-out;
+}
+.project-item .project-info .project-stacks li:hover {
+  color: var(--dyvix-project-hover-color, var(--dyvix-project-color, inherit));
+  transform: scale(1.2);
+}
 .dyvix-nav .dyvix-nav-link {
   cursor: pointer;
 }
