@@ -98,16 +98,15 @@
               "role": "Founder & Lead Architect",
               "links": [
                 {
-                  "icon": "$idevicon-github-original",
-                  "link": "https://github.com/younisdev/dyvix-ui",
-                  "active": true
+                  "icon": "github",
+                  "link": "https://github.com/younisdev/dyvix-ui"
                 },
                 {
-                  "icon": "$idevicon-npm-original-wordmark colored",
+                  "icon": "npm",
                   "link": "https://www.npmjs.com/package/dyvix-ui"
                 },
                 {
-                  "icon": "static/dyvix-logo.png",
+                  "icon": "https://raw.githubusercontent.com/younisdev/dyvix-ui/main/src/static/logo.png",
                   "link": "https://dyvix-ui.vercel.app/"
                 }
               ],
@@ -127,7 +126,7 @@
               "img": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg",
               "links": [
                 {
-                  "icon": "$idevicon-github-original",
+                  "icon": "github",
                   "link": "https://github.com/younisdev/inteligram"
                 }
               ],

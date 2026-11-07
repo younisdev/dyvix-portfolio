@@ -136,6 +136,7 @@ body {
 }
 .project-item .project-info .project-stacks li {
   transition: all 0.4s ease-in-out;
+  cursor: default;
 }
 .project-item .project-info .project-stacks li:hover {
   color: var(--dyvix-project-hover-color, var(--dyvix-project-color, inherit));
