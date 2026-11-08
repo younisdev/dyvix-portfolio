@@ -1,8 +1,12 @@
 "use server";
 
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq, gte } from "drizzle-orm";
 import { db } from "./db";
-import { configProfiles } from "./db/schema";
+import {
+  configProfiles,
+  gitUserCache,
+  reposInformationCache,
+} from "./db/schema";
 import { getAuthenticatedUser } from "./auth/actions";
 
 export async function getPresetData() {
@@ -156,5 +160,135 @@ export async function deactivePresets() {
   } catch (err) {
     console.error("Error Deactivating Preset", err);
     return { success: false, data: "Failed to deactivate Preset" };
+  }
+}
+
+const dataExpiresIn = 7;
+
+async function CacheContributionData(
+  target: string,
+  data: Record<string, any>,
+  type: "repo" | "user",
+) {
+  try {
+    const now = new Date();
+    if (type === "repo") {
+      await db
+        .insert(reposInformationCache)
+        .values({
+          repo: target,
+          repoInfo: data["repoData"],
+          userContribution: data["contributionData"],
+        })
+        .onConflictDoUpdate({
+          target: reposInformationCache.repo,
+          set: {
+            repoInfo: data["repoData"],
+            userContribution: data["contributionData"],
+            createdAt: now,
+          },
+        });
+    } else {
+      await db
+        .insert(gitUserCache)
+        .values({ targetUser: target, userInfo: data })
+        .onConflictDoUpdate({
+          target: gitUserCache.targetUser,
+          set: { userInfo: data, createdAt: now },
+        });
+    }
+  } catch (err) {
+    throw new Error("Failed to cache contributions data");
+  }
+}
+
+async function getCachedData(target: string, type: "repo" | "user") {
+  try {
+    const CACHE_TTL_MS = dataExpiresIn * 24 * 60 * 60 * 1000;
+    const freshThrreshold = new Date(Date.now() - CACHE_TTL_MS);
+
+    if (type === "repo") {
+      const records = await db
+        .select()
+        .from(reposInformationCache)
+        .where(
+          and(
+            eq(reposInformationCache.repo, target),
+            gte(reposInformationCache.createdAt, freshThrreshold),
+          ),
+        );
+      return {
+        repoData: records[0]?.repoInfo,
+        contributionData: records[0]?.userContribution,
+      };
+    } else {
+      const records = await db
+        .select()
+        .from(gitUserCache)
+        .where(
+          and(
+            eq(gitUserCache.targetUser, target),
+            gte(gitUserCache.createdAt, freshThrreshold),
+          ),
+        );
+
+      return records[0]?.userInfo;
+    }
+  } catch (err) {
+    console.error("Cache read failed:", err);
+    return null;
+  }
+}
+
+export async function fetchRepoData(repo: string, targetUser: string) {
+  if (!repo || !targetUser) return;
+
+  const cachedData = await getCachedData(repo, "repo");
+
+  if (cachedData && Object.values(cachedData).every((v) => v !== undefined)) {
+    console.log("cache found");
+    return cachedData;
+  }
+
+  const gitHeaders = {
+    "X-GitHub-Api-Version": "2022-11-28",
+    Accept: "application/vnd.github+json",
+    "User-Agent": "Portfolio-App",
+  };
+  try {
+    const [repoDataRes, prDataRes, commitDataRes] = await Promise.all([
+      fetch(`https://api.github.com/repos/${repo}`),
+      fetch(
+        `https://api.github.com/search/issues?q=type:pr+author:${targetUser}+repo:${repo}`,
+        {
+          headers: gitHeaders,
+        },
+      ),
+      fetch(
+        `https://api.github.com/search/commits?q=author:${targetUser}+repo:${repo}`,
+        {
+          headers: {
+            ...gitHeaders,
+            Accept: "application/vnd.github.cloak-preview+json",
+          },
+        },
+      ),
+    ]);
+
+    if (!repoDataRes.ok || !prDataRes.ok || !commitDataRes.ok)
+      throw new Error("Failed to establish connectiong with git.");
+
+    const [repoData, prData, commitData] = await Promise.all([
+      repoDataRes.json(),
+      prDataRes.json(),
+      commitDataRes.json(),
+    ]);
+
+    const contributionData = { prData: prData, commitData: commitData };
+    const data = { repoData: repoData, contributionData: contributionData };
+    await CacheContributionData(repo, data, "repo");
+    return data;
+  } catch (err) {
+    throw new Error("Failed to establish connectiong with git.");
   }
 }
