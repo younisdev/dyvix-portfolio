@@ -26,7 +26,7 @@ const DEFAULT_VALS = {
   theme: "singularity",
 };
 
-const THEME_OPTIONS = ["singularity", "cyberpunk", "minimal"];
+const THEME_OPTIONS = ["singularity", "cyberpunk", "minimal-glass"];
 
 const selectStyle: React.CSSProperties = {
   width: "100%",

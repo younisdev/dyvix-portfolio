@@ -4,7 +4,8 @@ import Image from "next/image";
 import StackIcons from "../StackIcons";
 import { fetchRepoData } from "@/service";
 import React from "react";
-import { boolean } from "drizzle-orm/gel-core";
+import contributionThemes from "../../../registery/contribution/theme.json";
+import { parseThemePropertyconfig } from "@/app/utils";
 
 interface ContentProp {
   repo: string;
@@ -35,6 +36,13 @@ export default function BodyContributionsSection({
   const foregroundColor =
     data?.foregroundColor || globalForegroundColor || "#f8fafc";
 
+  const contributionThemesThemeProperties = contributionThemes.find(
+    (ele) => ele.theme === theme,
+  )?.properties;
+  const contributionThemesOverrides = parseThemePropertyconfig(
+    contributionThemesThemeProperties as Record<string, any>,
+    "contribution",
+  );
   const content = data?.content;
 
   const [hydratedEntries, setHydratedEntries] = React.useState<{
@@ -72,9 +80,9 @@ export default function BodyContributionsSection({
     <section
       id="contribution-section"
       className="flex flex-wrap flex-col justify-center items-center gap-6 mt-32 w-full"
-      style={{ color: foregroundColor }}
+      style={{ color: foregroundColor, ...contributionThemesOverrides }}
     >
-      <h2 className="flex flex-wrap w-[90%] scroll-id-pointer" id="projects">
+      <h2 className="flex flex-wrap w-[90%] scroll-id-pointer" id={data.id}>
         <span className="section-header text-4xl font-bold">Contributions</span>
       </h2>
 
@@ -96,57 +104,80 @@ export default function BodyContributionsSection({
           return (
             <article
               key={`contribution-${index}`}
-              className="contribution-item flex flex-col gap-2 w-[90%] rounded-xl border border-white/10 bg-white/[0.02] p-5"
+              className="contribution-item flex flex-col gap-2 w-[90%] rounded-xl border border-white/10 bg-white/[0.02] p-5 align-middle"
             >
-              <div className="flex flex-col gap-1 align-middle">
-                <h3 className="flex flex-row gap-2 items-center text-lg font-bold">
-                  <a
-                    className="font-bold hover:underline"
-                    href={`https://github.com/${entry.repo}/`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {repoDetails?.name || splitRepoIdentifier[1]}
-                  </a>
+              <h3 className="contribution-identifier flex flex-row gap-2 items-center text-lg font-bold">
+                <Image
+                  src={repoDetails?.owner.avatar_url}
+                  alt={`${repoDetails?.name} repo avatar`}
+                  width={5}
+                  height={5}
+                  className="w-6 h-6 object-cover"
+                />
+                <a
+                  className="contribution-name font-bold hover:underline"
+                  href={`https://github.com/${entry.repo}/pulls?q=is%3Apr+author%3A${data.targetUser}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {repoDetails?.name || splitRepoIdentifier[1]}
+                </a>
 
-                  {repoDetails?.language && (
-                    <StackIcons name={repoDetails.language} />
-                  )}
-                </h3>
-                <span className="text-xs font-mono opacity-50">
-                  {entry.repo}
-                </span>
-                <span className="text-xs font-medium uppercase text-indigo-400">
-                  {entry.role}
-                </span>
-
-                {repoDetails?.description && (
-                  <p className="text-sm opacity-80 mt-2">
-                    {repoDetails.description}
-                  </p>
+                {repoDetails?.language && (
+                  <StackIcons name={repoDetails.language} />
                 )}
+              </h3>
+              <span className="contribution-path text-xs font-mono opacity-50">
+                {entry.repo}
+              </span>
+              <span className="contribution-role text-xs font-medium uppercase mt-2">
+                {entry.role}
+              </span>
 
-                <div className="flex items-center gap-4 text-xs opacity-60 mt-2">
-                  <span className="capitalize font-extrabold opacity-95">
-                    Repository Stats
-                  </span>
-                  <span>⭐ {repoDetails.stargazers_count ?? 0} stars</span>
-                  <span>🍴 {repoDetails.forks_count ?? 0} forks</span>
-                </div>
+              {repoDetails?.description && (
+                <p className="contribution-description text-sm opacity-80 mt-2">
+                  {repoDetails.description}
+                </p>
+              )}
 
-                <div className="flex items-center gap-4 text-xs opacity-60 mt-2">
-                  <span className="capitalize font-extrabold opacity-95">
-                    User Contribution
-                  </span>
-                  <span>
-                    🔀 {contributionDetails?.prData?.total_count ?? 0} PRs
-                  </span>
-                  <span>
-                    💻 {contributionDetails?.commitData?.total_count ?? 0}{" "}
-                    commits
-                  </span>
-                </div>
+              <div className="contribution-stats flex items-center gap-4 text-xs mt-2">
+                <span className="capitalize font-extrabold opacity-95">
+                  Repository Stats
+                </span>
+                <span className="contribution-stat-item opacity-80">
+                  ⭐ {repoDetails.stargazers_count ?? 0} stars
+                </span>
+                <span className="contribution-stat-item opacity-80">
+                  🍴 {repoDetails.forks_count ?? 0} forks
+                </span>
               </div>
+
+              <div className="contribution-stats flex items-center gap-4 text-xs mt-2">
+                <span className="capitalize font-extrabold opacity-95">
+                  User Contribution
+                </span>
+                <span className="contribution-stat-item opacity-80">
+                  🔀 {contributionDetails?.prData?.total_count ?? 0} PRs
+                </span>
+                <span className="contribution-stat-item opacity-80">
+                  💻 {contributionDetails?.commitData?.total_count ?? 0} commits
+                </span>
+              </div>
+              {repoDetails?.topics.length > 0 && (
+                <div className="contribution-tags flex flex-wrap flex-row items-center gap-4 text-xs mt-2">
+                  <span className="capitalize font-extrabold opacity-95">
+                    Tags
+                  </span>
+                  {repoDetails?.topics?.map((topic: string, index: number) => (
+                    <span
+                      className="contribution-tag-item p-2.5 rounded-lg border border-white/10 bg-white/5 text-xs font-medium select-none"
+                      key={`contrib-tag-${index}`}
+                    >
+                      {topic}
+                    </span>
+                  ))}
+                </div>
+              )}
             </article>
           );
         })

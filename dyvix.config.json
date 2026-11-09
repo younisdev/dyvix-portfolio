@@ -37,8 +37,8 @@
           "label": "Skills"
         },
         {
-          "href": "#experience",
-          "label": "Experience"
+          "href": "#contributions",
+          "label": "Contributions"
         },
         {
           "href": "#contact",
@@ -93,7 +93,7 @@
           "type": "projects",
           "content": [
             {
-              "img": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg",
+              "img": "https://raw.githubusercontent.com/younisdev/dyvix-ui/main/src/static/logo.png",
               "name": "Dyvix UI",
               "role": "Founder & Lead Architect",
               "links": [
@@ -123,7 +123,7 @@
               "description": "Headless, JSON-Driven animated component UI library."
             },
             {
-              "img": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg",
+              "img": "https://raw.githubusercontent.com/younisdev/younisdev.github.io/refs/heads/main/static/inteligram-logo.png",
               "links": [
                 {
                   "icon": "github",
@@ -152,16 +152,16 @@
               "role": "Founder & Lead Architect"
             },
             {
-              "repo": "younisdev/inteligram",
-              "role": "Founder"
-            },
-            {
               "repo": "mdn/content",
               "role": "Open Source Contributor"
             },
             {
               "repo": "mdn/browser-compat-data",
               "role": "Open Source Contributor"
+            },
+            {
+              "repo": "younisdev/inteligram",
+              "role": "Founder"
             }
           ]
         }

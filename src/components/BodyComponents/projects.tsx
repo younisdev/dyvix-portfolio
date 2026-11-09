@@ -51,7 +51,7 @@ export default function BodyProjectsSection({
       className="flex flex-wrap flex-col justify-center items-center gap-2 mt-32 w-full"
       style={{ color: foregroundColor, ...projectThemesOverrides }}
     >
-      <h2 className="flex flex-wrap w-[90%] scroll-id-pointer" id="projects">
+      <h2 className="flex flex-wrap w-[90%] scroll-id-pointer" id={data.id}>
         <span className="section-header text-4xl font-bold">Projects</span>
       </h2>
       {content?.map((entry, index) => (
@@ -74,7 +74,7 @@ export default function BodyProjectsSection({
                 <span className="project-role">{entry?.role}</span>
               </div>
               <p className="project-description">{entry?.description}</p>
-              <ul className="project-points flex flex-col gap-2 p-6">
+              <ul className="project-points flex flex-col gap-2 pt-3 pb-2 pl-4">
                 {entry?.points?.map((point, i) => (
                   <li key={`point-${i}`}>{point}</li>
                 ))}
