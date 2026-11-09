@@ -141,6 +141,29 @@
               "description": "Full-stack social media platform built with dynamic feed ranking and real-time updates"
             }
           ]
+        },
+        "contributions": {
+          "id": "contributions",
+          "type": "contributions",
+          "targetUser": "younisdev",
+          "content": [
+            {
+              "repo": "younisdev/dyvix-ui",
+              "role": "Founder & Lead Architect"
+            },
+            {
+              "repo": "younisdev/inteligram",
+              "role": "Founder"
+            },
+            {
+              "repo": "mdn/content",
+              "role": "Open Source Contributor"
+            },
+            {
+              "repo": "mdn/browser-compat-data",
+              "role": "Open Source Contributor"
+            }
+          ]
         }
       }
     }

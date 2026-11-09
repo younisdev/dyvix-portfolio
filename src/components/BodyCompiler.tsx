@@ -13,6 +13,7 @@ const COMPONENT_MAP: Record<
 > = {
   hero: lazy(() => import("./BodyComponents/hero")),
   projects: lazy(() => import("./BodyComponents/projects")),
+  contributions: lazy(() => import("./BodyComponents/contributions")),
 };
 
 function getComponent(type: string) {
@@ -22,7 +23,6 @@ function getComponent(type: string) {
 export default function BodyCompiler({ config, tl }: bodyProps) {
   const sectionConfig = config?.["sections"];
   const theme = config?.["theme"];
-  console.log(sectionConfig);
   return (
     <main>
       {Object.values(

@@ -37,6 +37,12 @@
           "type": "projects",
           "id": "string",
           "content": "Array<{ name: string, role: string, description: string, points: Array<string>, stack: Array<string>, links: Array<{ link: string, icon: string, active?: boolean }>, img: string }>"
+        },
+        "contributions": {
+          "type": "contributions",
+          "id": "string",
+          "targetUser": "string",
+          "content": "Array<{ repo: string, role: string }>"
         }
       }
     }

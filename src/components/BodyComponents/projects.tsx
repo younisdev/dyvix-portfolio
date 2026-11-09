@@ -18,7 +18,7 @@ interface ContentProp {
 
 interface ProjectsProps {
   data: {
-    type: "hero";
+    type: "projects";
     id?: string;
     foregroundColor?: string;
     content: ContentProp[];
@@ -69,7 +69,7 @@ export default function BodyProjectsSection({
               </div>
             )}
             <div className="project-info flex flex-col gap-4">
-              <div className="flex flex-col gap-1 align-item">
+              <div className="flex flex-col gap-1 align-middle">
                 <h3 className="project-name">{entry?.name}</h3>
                 <span className="project-role">{entry?.role}</span>
               </div>
