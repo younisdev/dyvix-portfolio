@@ -114,13 +114,18 @@ body {
   transform: translateY(-2px);
 }
 .project-item .project-info .project-name {
-  color: var(--dyvix-project-title-color, #f8fafc);
+  color: var(--dyvix-project-color, #f8fafc);
   font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
+.project-item .project-role {
+  color: var(--dyvix-project-color, #afb0b1);
+  opacity: 0.9;
+}
 .project-item .project-info .project-description {
-  color: var(--dyvix-project-desc-color, #94a3b8);
+  color: var(--dyvix-project-color, #94a3b8);
+  opacity: 0.9;
   font-size: 0.925rem;
   line-height: 1.6;
 }
@@ -130,7 +135,7 @@ body {
   list-style: disc;
 }
 .project-item .project-info .project-points li {
-  color: var(--dyvix-project-point-color, #cbd5e1);
+  color: var(--dyvix-project-color, #cbd5e1);
   font-size: 0.875rem;
   line-height: 1.5;
 }
