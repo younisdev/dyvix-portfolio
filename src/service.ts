@@ -6,6 +6,7 @@ import {
   configProfiles,
   gitUserCache,
   reposInformationCache,
+  users,
 } from "./db/schema";
 import { getAuthenticatedUser } from "./auth/actions";
 
@@ -290,5 +291,37 @@ export async function fetchRepoData(repo: string, targetUser: string) {
     return data;
   } catch (err) {
     throw new Error("Failed to establish connectiong with git.");
+  }
+}
+
+export async function GetPresetsCount() {
+  try {
+    const result = await db.select().from(configProfiles);
+
+    return { success: true, data: result.length };
+  } catch (err) {
+    console.error("Error finding presets data count", err);
+    return { success: false, data: "Failed to get presets count" };
+  }
+}
+export async function GetUsersCount() {
+  try {
+    const result = await db.select().from(users);
+
+    return { success: true, data: result.length };
+  } catch (err) {
+    console.error("Error finding users count", err);
+    return { success: false, data: "Failed to get users count" };
+  }
+}
+
+export async function GetRepoCachCount() {
+  try {
+    const result = await db.select().from(reposInformationCache);
+
+    return { success: true, data: result.length };
+  } catch (err) {
+    console.error("Error finding cached repos count", err);
+    return { success: false, data: "Failed to get cached repos count" };
   }
 }
