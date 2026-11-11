@@ -2,11 +2,17 @@
 
 import React, { useEffect, useState } from "react";
 import AdminNav from "./AdminNav";
-import { DyvixModal, dyvixToast, DyvixToastContainer } from "dyvix-ui";
+import {
+  DyvixModal,
+  DyvixModalOverride,
+  dyvixToast,
+  DyvixToastContainer,
+} from "dyvix-ui";
 import {
   getAuthenticatedUser,
   handleLoginAction,
   handleRegisterAction,
+  hasOwner,
 } from "@/auth/actions";
 import ClientBodyStyling from "@/app/client";
 
@@ -30,13 +36,14 @@ const MODAL_OVERRIDES = {
   "--dyvix-modal-button-color": "#0f172a",
   "--dyvix-modal-z-index": "1000",
   "--dyvix-modal-display": "flex",
-} as const;
+} as DyvixModalOverride;
 
 export default function AdminAuthShell({ children }: AdminAuthShellProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [isAuthenticated, setAuth] = useState<boolean>(false);
   const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(true);
   const [authMethod, setAuthMethod] = useState<"login" | "register">("login");
+  const [isOccupied, setIsoccupied] = useState<boolean>(false);
 
   useEffect(() => {
     async function checkExistingAuth() {
@@ -50,7 +57,13 @@ export default function AdminAuthShell({ children }: AdminAuthShellProps) {
         setIsLoadingAuth(false);
       }
     }
+    async function CheckOccupationStatus() {
+      const result = await hasOwner();
 
+      setIsoccupied(result);
+    }
+
+    CheckOccupationStatus();
     checkExistingAuth();
     setIsMounted(true);
   }, []);
@@ -95,9 +108,16 @@ export default function AdminAuthShell({ children }: AdminAuthShellProps) {
           !isAuthenticated
             ? [
                 { label: "Login", onClick: () => setAuthMethod("login") },
-                { label: "Register", onClick: () => setAuthMethod("register") },
+                ...(!isOccupied
+                  ? [
+                      {
+                        label: "Register",
+                        onClick: () => setAuthMethod("register"),
+                      },
+                    ]
+                  : []),
               ]
-            : [{ label: "Home", onClick: () => {} }]
+            : [{ label: "Home", href: '/admin'}, { label: "Editor", href: '/admin/config/presets'}]
         }
       />
       {!isAuthenticated ? (

@@ -447,7 +447,35 @@ body {
   transform: scale(1.01);
   border: 1px solid rgba(187, 248, 252, 0.2);
 }
+.dashboard-item {
+  background: #212a50;
+  border: 1px solid #1e2b3d;
+  border-radius: 2rem;
+}
 
+.dashboard-item .dashboard-action {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  color: #90d7df;
+  background: #2a3766;
+  border-radius: 2rem;
+  border: 1px solid #3b4c80;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dashboard-item .dashboard-action:hover {
+  color: #ffffff;
+  background: #37467d;
+  transform: translateY(-2px);
+}
+
+.dashboard-item .dashboard-action:active {
+  color: #93cbf6;
+  background: #082382;
+  transform: scale(0.9);
+}
 @media screen and (max-width: 1024px) {
   .preset-editor-container {
     flex-direction: column;
