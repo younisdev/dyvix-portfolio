@@ -3,7 +3,10 @@
 import Image from "next/image";
 import StackIcons from "../StackIcons";
 import { fetchRepoData } from "@/service";
+import { useGSAP } from "@gsap/react";
 import React from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import contributionThemes from "../../../registery/contribution/theme.json";
 import { parseThemePropertyconfig } from "@/app/utils";
 
@@ -26,6 +29,7 @@ interface ContributionsProps {
 }
 
 type RepoEntry = Record<string, any>;
+gsap.registerPlugin(ScrollTrigger);
 
 export default function BodyContributionsSection({
   data,
@@ -54,7 +58,35 @@ export default function BodyContributionsSection({
   });
 
   const [loading, setLoading] = React.useState(true);
+  const containerRef = React.useRef<HTMLDivElement>(null);
 
+  useGSAP(
+    () => {
+      if (loading) return;
+      const items =
+        containerRef.current?.querySelectorAll(".contribution-item");
+
+      if (!items || items.length === 0) return;
+
+      gsap.fromTo(
+        items,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          ease: "power2.out",
+          duration: 0.6,
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 78%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      );
+    },
+    { scope: containerRef, dependencies: [loading] },
+  );
   React.useEffect(() => {
     async function loadHydrateEntries() {
       try {
@@ -79,6 +111,7 @@ export default function BodyContributionsSection({
   return (
     <section
       id="contribution-section"
+      ref={containerRef}
       className="flex flex-wrap flex-col justify-center items-center gap-6 mt-32 w-full"
       style={{ color: foregroundColor, ...contributionThemesOverrides }}
     >
