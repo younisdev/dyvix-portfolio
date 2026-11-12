@@ -5,6 +5,7 @@ import { lazy, Suspense } from "react";
 interface bodyProps {
   config: Record<string, any>;
   tl?: gsap.core.Timeline | null;
+  disableAnimation?: boolean;
 }
 
 const COMPONENT_MAP: Record<
@@ -20,7 +21,11 @@ function getComponent(type: string) {
   return COMPONENT_MAP[type];
 }
 
-export default function BodyCompiler({ config, tl }: bodyProps) {
+export default function BodyCompiler({
+  config,
+  tl,
+  disableAnimation = false,
+}: bodyProps) {
   const sectionConfig = config?.["sections"];
   const theme = config?.["theme"];
   return (
@@ -39,7 +44,12 @@ export default function BodyCompiler({ config, tl }: bodyProps) {
 
         return (
           <Suspense key={section.id} fallback={`Loading...`}>
-            <SectionComponent data={section} theme={theme} tl={tl} />
+            <SectionComponent
+              data={section}
+              theme={theme}
+              tl={tl}
+              {...(disableAnimation && { disableAnimation: disableAnimation })}
+            />
           </Suspense>
         );
       })}

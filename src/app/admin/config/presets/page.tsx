@@ -61,7 +61,7 @@ export default function PresetPage() {
 
     compilePresetData();
   }, [refreshTrigger]);
-
+  console.log(result);
   React.useEffect(() => {
     if (!autoSave || mode !== "Edit" || !selectedPreset?.id) return;
     if (snapshotPreset(selectedPreset) === lastSavedRef.current) return;
@@ -75,8 +75,6 @@ export default function PresetPage() {
 
     return () => clearTimeout(timeoutId);
   }, [selectedPreset, autoSave, mode]);
-
-  console.log(selectedPreset);
 
   // Shared animations utilitiy allowing deep control for the developer (port to dyvix ui?)
   useGSAP(() => {

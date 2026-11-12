@@ -117,7 +117,10 @@ export default function AdminAuthShell({ children }: AdminAuthShellProps) {
                     ]
                   : []),
               ]
-            : [{ label: "Home", href: '/admin'}, { label: "Editor", href: '/admin/config/presets'}]
+            : [
+                { label: "Home", href: "/admin" },
+                { label: "Editor", href: "/admin/config/presets" },
+              ]
         }
       />
       {!isAuthenticated ? (
