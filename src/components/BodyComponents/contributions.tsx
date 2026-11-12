@@ -26,6 +26,7 @@ interface ContributionsProps {
   globalForegroundColor?: string;
   theme?: string;
   tl?: gsap.core.Timeline | null;
+  disableAnimation?: boolean;
 }
 
 type RepoEntry = Record<string, any>;
@@ -36,6 +37,7 @@ export default function BodyContributionsSection({
   globalForegroundColor,
   theme,
   tl,
+  disableAnimation = false,
 }: ContributionsProps) {
   const foregroundColor =
     data?.foregroundColor || globalForegroundColor || "#f8fafc";
@@ -57,12 +59,14 @@ export default function BodyContributionsSection({
     user: {},
   });
 
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(
+    !disableAnimation ? true : false,
+  );
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      if (loading) return;
+      if (loading || disableAnimation) return;
       const items =
         containerRef.current?.querySelectorAll(".contribution-item");
 
@@ -87,13 +91,13 @@ export default function BodyContributionsSection({
     },
     { scope: containerRef, dependencies: [loading] },
   );
+
   React.useEffect(() => {
     async function loadHydrateEntries() {
       try {
         const HydratedRepoEntries: RepoEntry[] = await Promise.all(
           content.map(async (entry) => {
             const repoData = await fetchRepoData(entry.repo, data.targetUser);
-
             return { [entry.repo]: repoData };
           }),
         );
@@ -115,7 +119,7 @@ export default function BodyContributionsSection({
       className="flex flex-wrap flex-col justify-center items-center gap-6 mt-32 w-full"
       style={{ color: foregroundColor, ...contributionThemesOverrides }}
     >
-      <h2 className="flex flex-wrap w-[90%] scroll-id-pointer" id={data.id}>
+      <h2 className="flex flex-wrap w-[90%] scroll-id-pointer" id={data?.id}>
         <span className="section-header text-4xl font-bold">Contributions</span>
       </h2>
 
@@ -128,28 +132,37 @@ export default function BodyContributionsSection({
             (item) => item[entry.repo],
           );
           const repoDetails = matchedRepoObj
-            ? matchedRepoObj[entry.repo]["repoData"]
+            ? matchedRepoObj[entry.repo]?.["repoData"]
             : null;
 
           const contributionDetails =
-            matchedRepoObj?.[entry.repo]["contributionData"];
+            matchedRepoObj?.[entry.repo]?.["contributionData"];
+
+          const topics = Array.isArray(repoDetails?.topics)
+            ? repoDetails.topics
+            : [];
 
           return (
             <article
               key={`contribution-${index}`}
+              style={
+                disableAnimation ? { opacity: 1, transform: "none" } : undefined
+              }
               className="contribution-item flex flex-col gap-2 w-[90%] rounded-xl border border-white/10 bg-white/[0.02] p-5 align-middle"
             >
               <h3 className="contribution-identifier flex flex-row gap-2 items-center text-lg font-bold">
-                <Image
-                  src={repoDetails?.owner.avatar_url}
-                  alt={`${repoDetails?.name} repo avatar`}
-                  width={5}
-                  height={5}
-                  className="w-6 h-6 object-cover"
-                />
+                {repoDetails?.owner?.avatar_url && (
+                  <Image
+                    src={repoDetails.owner.avatar_url}
+                    alt={`${repoDetails?.name || "repo"} repo avatar`}
+                    width={20}
+                    height={20}
+                    className="w-6 h-6 object-cover rounded-full"
+                  />
+                )}
                 <a
                   className="contribution-name font-bold hover:underline"
-                  href={`https://github.com/${entry.repo}/pulls?q=is%3Apr+author%3A${data.targetUser}`}
+                  href={`https://github.com/${entry.repo}/pulls?q=is%3Apr+author%3A${data?.targetUser}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -157,7 +170,7 @@ export default function BodyContributionsSection({
                 </a>
 
                 {repoDetails?.language && (
-                  <StackIcons name={repoDetails.language} />
+                  <StackIcons name={repoDetails?.language} />
                 )}
               </h3>
               <span className="contribution-path text-xs font-mono opacity-50">
@@ -178,10 +191,10 @@ export default function BodyContributionsSection({
                   Repository Stats
                 </span>
                 <span className="contribution-stat-item opacity-80">
-                  ⭐ {repoDetails.stargazers_count ?? 0} stars
+                  ⭐ {repoDetails?.stargazers_count ?? 0} stars
                 </span>
                 <span className="contribution-stat-item opacity-80">
-                  🍴 {repoDetails.forks_count ?? 0} forks
+                  🍴 {repoDetails?.forks_count ?? 0} forks
                 </span>
               </div>
 
@@ -196,15 +209,16 @@ export default function BodyContributionsSection({
                   💻 {contributionDetails?.commitData?.total_count ?? 0} commits
                 </span>
               </div>
-              {repoDetails?.topics.length > 0 && (
+
+              {topics.length > 0 && (
                 <div className="contribution-tags flex flex-wrap flex-row items-center gap-4 text-xs mt-2">
                   <span className="capitalize font-extrabold opacity-95">
                     Tags
                   </span>
-                  {repoDetails?.topics?.map((topic: string, index: number) => (
+                  {topics.map((topic: string, tagIndex: number) => (
                     <span
                       className="contribution-tag-item p-2.5 rounded-lg border border-white/10 bg-white/5 text-xs font-medium select-none"
-                      key={`contrib-tag-${index}`}
+                      key={`contrib-tag-${tagIndex}`}
                     >
                       {topic}
                     </span>

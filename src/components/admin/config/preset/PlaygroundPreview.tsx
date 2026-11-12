@@ -36,7 +36,11 @@ const MemomizedPlaygroundBody = React.memo(function PlaygroundBody({
   return (
     <div className="playground-scroll">
       <HeaderNav config={config?.["components"]?.["nav"]} debug tl={tl} />
-      <BodyCompiler config={config?.["components"]?.["body"]} tl={tl} />
+      <BodyCompiler
+        config={config?.["components"]?.["body"]}
+        tl={tl}
+        disableAnimation
+      />
     </div>
   );
 });

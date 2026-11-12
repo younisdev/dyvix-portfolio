@@ -13,7 +13,7 @@ type DyvixInputType =
   | "date"
   | "datetime-local";
 
-type FieldKind = "array" | "color" | "theme" | "number" | "string";
+type FieldKind = "array" | "color" | "theme" | "number" | "string" | "rawVal";
 
 type ShapeVariant =
   | { kind: "object"; fields: Record<string, string> }
@@ -24,6 +24,7 @@ const DEFAULT_VALS = {
   string: "",
   number: 0,
   theme: "singularity",
+  rawVal: "",
 };
 
 const THEME_OPTIONS = ["singularity", "cyberpunk", "minimal-glass"];
@@ -173,7 +174,8 @@ function getFieldKind(typeString: string): FieldKind {
   if (typeString.includes("color")) return "color";
   if (typeString.includes("theme")) return "theme";
   if (typeString.includes("number")) return "number";
-  return "string";
+  if (typeString.includes("string")) return "string";
+  return "rawVal";
 }
 
 function createDefaultFor(typeString: string): any {
@@ -181,7 +183,13 @@ function createDefaultFor(typeString: string): any {
   if (literals) return literals[0];
 
   const kind = getFieldKind(typeString);
-  return kind === "array" ? [] : DEFAULT_VALS[kind];
+  if (kind === "array") return [];
+
+  if (typeString.includes("|")) {
+    return typeString.split("|")[0].trim();
+  }
+
+  return DEFAULT_VALS[kind] ?? "";
 }
 
 function createItem(variant: ShapeVariant): any {
@@ -499,9 +507,37 @@ export function RenderStringInput({
       </div>
     );
   }
+  if (val.includes("number") || val.includes("string")) {
+    let type: DyvixInputType = "text";
+    if (val.includes("number")) type = "number";
 
-  let type: DyvixInputType = "text";
-  if (val.includes("number")) type = "number";
+    return (
+      <div style={{ margin: "12px 0" }}>
+        <div style={{ marginBottom: "4px" }}>
+          <DyvixLabel animation={null}>
+            <span
+              style={{ fontSize: "0.85rem", color: "#cbd5e1", fontWeight: 500 }}
+            >
+              {fieldKey}
+            </span>
+          </DyvixLabel>
+        </div>
+        <DyvixInput
+          onChange={(e) =>
+            callback((prev: any) => setValFromTree(prev, tree, e.target.value))
+          }
+          type={type}
+          placeholder={fieldKey}
+          defaultValue={resolvedValue}
+          animation={null}
+        />
+      </div>
+    );
+  }
+
+  const vals = val.includes("|")
+    ? val.split("|").map((v) => v.trim())
+    : [val.trim()];
 
   return (
     <div style={{ margin: "12px 0" }}>
@@ -514,19 +550,30 @@ export function RenderStringInput({
           </span>
         </DyvixLabel>
       </div>
-      <DyvixInput
+      <select
+        value={resolvedValue ?? vals[0]}
         onChange={(e) =>
           callback((prev: any) => setValFromTree(prev, tree, e.target.value))
         }
-        type={type}
-        placeholder={fieldKey}
-        defaultValue={resolvedValue}
-        animation={null}
-      />
+        style={{
+          ...selectStyle,
+          ...(vals.length === 1 && {
+            opacity: 0.7,
+            cursor: "not-allowed",
+            background: "rgba(15, 23, 42, 0.4)",
+          }),
+        }}
+        disabled={vals.length === 1}
+      >
+        {vals.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
-
 function RenderArrayInput({
   fieldKey,
   val,
@@ -881,6 +928,27 @@ function FieldInput({
           style={selectStyle}
         >
           {THEME_OPTIONS.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
+
+  if (kind === "rawVal") {
+    console.log(kind);
+    const vals = typeString.split("|")[0].trim();
+    return (
+      <div style={{ margin: "8px 0" }}>
+        {labelNode}
+        <select
+          value={value ?? vals}
+          onChange={(e) => onChange(e.target.value)}
+          style={selectStyle}
+        >
+          {typeString.split("|").map((option) => (
             <option key={option} value={option}>
               {option}
             </option>

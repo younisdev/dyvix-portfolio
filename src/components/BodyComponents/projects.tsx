@@ -1,3 +1,5 @@
+"use client";
+
 import projectThemes from "../../../registery/project/theme.json";
 import { parseThemePropertyconfig } from "@/app/utils";
 import Image from "next/image";
@@ -30,7 +32,9 @@ interface ProjectsProps {
   globalForegroundColor?: string;
   theme?: string;
   tl?: gsap.core.Timeline | null;
+  disableAnimation?: boolean;
 }
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function BodyProjectsSection({
@@ -38,6 +42,7 @@ export default function BodyProjectsSection({
   globalForegroundColor,
   theme,
   tl,
+  disableAnimation = false,
 }: ProjectsProps) {
   const foregroundColor =
     data?.foregroundColor || globalForegroundColor || "#f8fafc";
@@ -49,12 +54,13 @@ export default function BodyProjectsSection({
     projectThemesThemeProperties as Record<string, any>,
     "project",
   );
-  const content = data?.content;
+  const content = data?.content || [];
 
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
+      if (disableAnimation) return;
       const items = containerRef.current?.querySelectorAll(".project-item");
 
       if (!items || items.length === 0) return;
@@ -76,7 +82,7 @@ export default function BodyProjectsSection({
         },
       );
     },
-    { scope: containerRef },
+    { scope: containerRef, dependencies: [disableAnimation] },
   );
 
   return (
@@ -86,12 +92,15 @@ export default function BodyProjectsSection({
       style={{ color: foregroundColor, ...projectThemesOverrides }}
       ref={containerRef}
     >
-      <h2 className="flex flex-wrap w-[90%] scroll-id-pointer" id={data.id}>
+      <h2 className="flex flex-wrap w-[90%] scroll-id-pointer" id={data?.id}>
         <span className="section-header text-4xl font-bold">Projects</span>
       </h2>
       {content?.map((entry, index) => (
         <article
           key={`proj-${index}`}
+          style={
+            disableAnimation ? { opacity: 1, transform: "none" } : undefined
+          }
           className="project-item w-[90%] flex flex-col md:flex-row gap-6 p-6 items-center transition-all duration-300 hover:border-white/20 hover:-translate-y-1"
         >
           {entry?.img && (
@@ -99,7 +108,7 @@ export default function BodyProjectsSection({
               <Image
                 className="object-contain transition-transform duration-500 group-hover:scale-[1.03]"
                 src={entry.img}
-                alt={`${entry.name} project logo`}
+                alt={`${entry?.name || "Project"} logo`}
                 fill
                 sizes="(max-width: 768px) 90vw, 30vw"
               />
@@ -111,48 +120,55 @@ export default function BodyProjectsSection({
               <span className="project-role">{entry?.role}</span>
             </div>
             <p className="project-description">{entry?.description}</p>
-            <ul className="project-points flex flex-col gap-2 pt-3 pb-2 pl-4">
-              {entry?.points?.map((point, i) => (
-                <li key={`point-${i}`}>{point}</li>
-              ))}
-            </ul>
-            <ul className="project-stacks flex flex-row gap-4 p-2 items-center">
-              {entry?.stack?.map((item, i) => (
-                <li key={`stack-${i}`} className="select-none">
-                  <StackIcons name={item} />
-                </li>
-              ))}
-            </ul>
-            <div className="project-links flex flex-row gap-6 ml-auto items-center">
-              {entry?.links?.map((item, i) => {
-                const label = item.icon.includes("/")
-                  ? item.icon.split("/").pop()?.split(".")[0] || ""
-                  : item.icon || "";
-                return (
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    key={`stack-${i}`}
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="flex items-center gap-2 p-2.5 rounded-lg border border-white/10 bg-white/5 text-xs font-medium transition-all hover:bg-white/10 hover:border-white/20 select-none active:scale-110"
-                  >
-                    {!item.icon.includes("/") ? (
-                      <StackIcons name={item.icon} />
-                    ) : (
-                      <Image
-                        className="w-6 h-6 object-contain"
-                        src={item.icon || ""}
-                        alt=""
-                        width={24}
-                        height={24}
-                      />
-                    )}
-                    <span className="capitalize">{label}</span>
-                  </a>
-                );
-              })}
-            </div>
+            {Array.isArray(entry?.points) && entry.points.length > 0 && (
+              <ul className="project-points flex flex-col gap-2 pt-3 pb-2 pl-4">
+                {entry.points.map((point, i) => (
+                  <li key={`point-${i}`}>{point}</li>
+                ))}
+              </ul>
+            )}
+            {Array.isArray(entry?.stack) && entry.stack.length > 0 && (
+              <ul className="project-stacks flex flex-row gap-4 p-2 items-center">
+                {entry.stack.map((item, i) => (
+                  <li key={`stack-${i}`} className="select-none">
+                    <StackIcons name={item} />
+                  </li>
+                ))}
+              </ul>
+            )}
+            {Array.isArray(entry?.links) && entry.links.length > 0 && (
+              <div className="project-links flex flex-row gap-6 ml-auto items-center">
+                {entry.links.map((item, i) => {
+                  const iconStr = item?.icon || "";
+                  const label = iconStr.includes("/")
+                    ? iconStr.split("/").pop()?.split(".")[0] || ""
+                    : iconStr;
+                  return (
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      key={`link-${i}`}
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      className="flex items-center gap-2 p-2.5 rounded-lg border border-white/10 bg-white/5 text-xs font-medium transition-all hover:bg-white/10 hover:border-white/20 select-none active:scale-110"
+                    >
+                      {!iconStr.includes("/") ? (
+                        <StackIcons name={iconStr} />
+                      ) : (
+                        <Image
+                          className="w-6 h-6 object-contain"
+                          src={iconStr}
+                          alt=""
+                          width={24}
+                          height={24}
+                        />
+                      )}
+                      <span className="capitalize">{label}</span>
+                    </a>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </article>
       ))}

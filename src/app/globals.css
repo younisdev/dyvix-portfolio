@@ -414,7 +414,7 @@ body {
 .playground-holder {
   position: relative;
   contain: layout;
-  overflow-y: auto;
+  overflow: hidden;
   height: 100%;
   width: 100%;
   border-radius: inherit;
@@ -423,7 +423,7 @@ body {
 .playground-scroll {
   position: absolute;
   inset: 0;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 .editor-toolbox {
