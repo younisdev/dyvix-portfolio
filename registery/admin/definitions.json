@@ -11,7 +11,7 @@
       "header": "string",
       "theme": "theme",
       "sections": "Array<{ label: string, href: string }>",
-      "links": "Array<{ label: string, icon: string, src: string }>"
+      "links": "Array<{ label: string, icon: string, href: string }>"
     },
     "body": {
       "theme": "theme",

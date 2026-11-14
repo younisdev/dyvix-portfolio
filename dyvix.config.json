@@ -10,19 +10,9 @@
     "nav": {
       "links": [
         {
-          "src": "https://github.com",
+          "href": "https://github.com/younisdev",
           "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg",
           "label": "GitHub"
-        },
-        {
-          "src": "https://linkedin.com",
-          "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg",
-          "label": "LinkedIn"
-        },
-        {
-          "src": "https://x.com",
-          "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/x.svg",
-          "label": "X"
         }
       ],
       "theme": "singularity",
