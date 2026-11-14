@@ -125,7 +125,7 @@ export default function AdminAuthShell({ children }: AdminAuthShellProps) {
       />
       {!isAuthenticated ? (
         <DyvixModal
-          style={{zIndex: 500}}
+          style={{ zIndex: 500 }}
           onSubmit={(data) => {
             HandleSubmitData(data);
           }}
