@@ -12,7 +12,7 @@ export function parseThemePropertyconfig(
   component: string,
 ) {
   if (!config || typeof config !== "object") return {};
-  let result: Record<string, any> = {};
+  const result: Record<string, any> = {};
 
   Object.entries(config).forEach(([key, val]) => {
     result[`--dyvix-${component}-${key}`] = val;
