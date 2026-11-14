@@ -43,7 +43,7 @@ export default function BodyCompiler({
         }
 
         return (
-          <Suspense key={section.id} fallback={`Loading...`}>
+          <Suspense key={section.id} fallback={null}>
             <SectionComponent
               data={section}
               theme={theme}
