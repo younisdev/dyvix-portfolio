@@ -61,7 +61,9 @@ export default function BodyProjectsSection({
   useGSAP(
     () => {
       if (disableAnimation) return;
-      const items = containerRef.current?.querySelectorAll(".project-item-wrapper");
+      const items = containerRef.current?.querySelectorAll(
+        ".project-item-wrapper",
+      );
 
       if (!items || items.length === 0) return;
 

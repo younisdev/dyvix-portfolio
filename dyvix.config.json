@@ -13,6 +13,11 @@
           "href": "https://github.com/younisdev",
           "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg",
           "label": "GitHub"
+        },
+        {
+          "href": "mailto:younisdevx@gmail.com",
+          "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/maildotru.svg",
+          "label": "Email"
         }
       ],
       "theme": "singularity",
@@ -50,8 +55,8 @@
             },
             {
               "id": "Secondary",
-              "href": "/resume.pdf",
-              "label": "View Resume"
+              "href": "#contributions",
+              "label": "View contributions"
             }
           ],
           "type": "hero",
@@ -60,15 +65,45 @@
             "type": "marquee",
             "content": [
               {
-                "href": "#contact",
-                "icon": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg",
-                "text": "Github"
+                "href": "#projects",
+                "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg",
+                "text": "Next.js"
               },
-              "Next.js",
-              "TypeScript",
-              "Tailwind CSS",
-              "GSAP",
-              "SQL"
+              {
+                "href": "#projects",
+                "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+                "text": "React"
+              },
+              {
+                "href": "#projects",
+                "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
+                "text": "TypeScript"
+              },
+              {
+                "href": "#projects",
+                "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
+                "text": "Tailwind CSS"
+              },
+              {
+                "href": "#projects",
+                "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
+                "text": "Python"
+              },
+              {
+                "href": "#projects",
+                "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg",
+                "text": "Django"
+              },
+              {
+                "href": "#projects",
+                "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
+                "text": "PostgreSQL"
+              },
+              {
+                "href": "#contributions",
+                "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
+                "text": "GitHub"
+              }
             ]
           },
           "title": "Frontend Software Engineer & UI Architect",
