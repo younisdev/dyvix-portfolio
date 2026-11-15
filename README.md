@@ -77,6 +77,10 @@ npm run dev
 
 Open the local URL provided in your terminal (usually http://localhost:3000).
 
+### Guide
+
+Check out [GUIDE.md](./GUIDE.md) for more information.
+
 ## Contributing
 
 Feel free to open meaningful issues and PRs.
