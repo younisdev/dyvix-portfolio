@@ -75,7 +75,7 @@
     npm run dev
     ```
 
-Open the local URL provided in your terminal (usually http://localhost:3000).
+    Open the local URL provided in your terminal (usually http://localhost:3000).
 
 ### Guide
 
