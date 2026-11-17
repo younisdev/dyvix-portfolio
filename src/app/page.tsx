@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import HeaderNav from "@/components/HeaderNav";
 import { getActiveConfig } from "./layout";
 import LoadingWrapper from "@/components/LoadingWrapper";
