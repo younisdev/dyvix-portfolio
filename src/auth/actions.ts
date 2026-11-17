@@ -13,7 +13,7 @@ export async function handleLoginAction(username: string, password: string) {
     await SaveToken(result, username);
     return { success: true };
   } catch (error: any) {
-    return { success: false, error: error.message };
+    return { success: false, error: "Invalid usernam or password" };
   }
 }
 
@@ -96,21 +96,24 @@ export async function deleteToken() {
 }
 
 export async function getAuthenticatedUser() {
-  const tokenCookie = await getToken();
+  try {
+    const tokenCookie = await getToken();
 
-  if (!tokenCookie) return null;
+    if (!tokenCookie) return null;
 
-  const { token } = JSON.parse(tokenCookie);
-  const payload = await verifyAuthToken(token);
+    const { token } = JSON.parse(tokenCookie);
+    const payload = await verifyAuthToken(token);
 
-  return payload;
+    return payload;
+  } catch {
+    return null;
+  }
 }
 
 export async function hasOwner(tx: DbOrTx = db) {
   try {
-    const existingUsers = await db.select().from(users).limit(1);
-    const isOccupied = existingUsers.length > 0;
-    return isOccupied;
+    const [existingUsers] = await tx.select().from(users).limit(1);
+    return !!existingUsers;
   } catch (error) {
     console.error("Database check failed, failing closed:", error);
     return true;

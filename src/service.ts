@@ -172,7 +172,7 @@ export async function deactivePresets() {
 const dataExpiresIn = 7;
 
 async function CacheContributionData(
-  target: string,
+  target: { repo: string; user: string },
   data: Record<string, any>,
   type: "repo" | "user",
 ) {
@@ -182,13 +182,19 @@ async function CacheContributionData(
       await db
         .insert(reposInformationCache)
         .values({
-          repo: target,
+          githubUser: target.user,
+          repo: target.repo,
           repoInfo: data["repoData"],
           userContribution: data["contributionData"],
         })
         .onConflictDoUpdate({
-          target: reposInformationCache.repo,
+          target: [
+            reposInformationCache.repo,
+            reposInformationCache.githubUser,
+          ],
           set: {
+            githubUser: target.user,
+            repo: target.repo,
             repoInfo: data["repoData"],
             userContribution: data["contributionData"],
             createdAt: now,
@@ -197,7 +203,7 @@ async function CacheContributionData(
     } else {
       await db
         .insert(gitUserCache)
-        .values({ targetUser: target, userInfo: data })
+        .values({ targetUser: target.user, userInfo: data })
         .onConflictDoUpdate({
           target: gitUserCache.targetUser,
           set: { userInfo: data, createdAt: now },
@@ -208,7 +214,10 @@ async function CacheContributionData(
   }
 }
 
-async function getCachedData(target: string, type: "repo" | "user") {
+async function getCachedData(
+  target: { repo: string; user: string },
+  type: "repo" | "user",
+) {
   try {
     const CACHE_TTL_MS = dataExpiresIn * 24 * 60 * 60 * 1000;
     const freshThrreshold = new Date(Date.now() - CACHE_TTL_MS);
@@ -219,8 +228,9 @@ async function getCachedData(target: string, type: "repo" | "user") {
         .from(reposInformationCache)
         .where(
           and(
-            eq(reposInformationCache.repo, target),
+            eq(reposInformationCache.repo, target.repo),
             gte(reposInformationCache.createdAt, freshThrreshold),
+            eq(reposInformationCache.githubUser, target.user),
           ),
         );
       return {
@@ -233,7 +243,7 @@ async function getCachedData(target: string, type: "repo" | "user") {
         .from(gitUserCache)
         .where(
           and(
-            eq(gitUserCache.targetUser, target),
+            eq(gitUserCache.targetUser, target.user),
             gte(gitUserCache.createdAt, freshThrreshold),
           ),
         );
@@ -249,7 +259,10 @@ async function getCachedData(target: string, type: "repo" | "user") {
 export async function fetchRepoData(repo: string, targetUser: string) {
   if (!repo || !targetUser) return;
 
-  const cachedData = await getCachedData(repo, "repo");
+  const cachedData = await getCachedData(
+    { repo: repo, user: targetUser },
+    "repo",
+  );
 
   if (cachedData && Object.values(cachedData).every((v) => v !== undefined)) {
     console.log("cache found");
@@ -292,7 +305,7 @@ export async function fetchRepoData(repo: string, targetUser: string) {
 
     const contributionData = { prData: prData, commitData: commitData };
     const data = { repoData: repoData, contributionData: contributionData };
-    await CacheContributionData(repo, data, "repo");
+    await CacheContributionData({ repo: repo, user: targetUser }, data, "repo");
     return data;
   } catch (err) {
     throw new Error("Failed to establish connectiong with git.");
