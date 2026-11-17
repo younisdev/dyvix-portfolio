@@ -1,3 +1,4 @@
+import { table } from "console";
 import {
   uuid,
   text,
@@ -5,6 +6,7 @@ import {
   boolean,
   pgTable,
   jsonb,
+  unique,
 } from "drizzle-orm/pg-core";
 
 export const configProfiles = pgTable("configProfiles", {
@@ -26,13 +28,20 @@ export const users = pgTable("users", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
   superUser: boolean("super_user").notNull(), // replace with proper permisions down the line?
 });
-export const reposInformationCache = pgTable("reposInformationCache", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  repo: text("repo").notNull().unique(),
-  repoInfo: jsonb("repoInfo").notNull().default({}),
-  userContribution: jsonb("userContribution").notNull().default({}),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+export const reposInformationCache = pgTable(
+  "reposInformationCache",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    repo: text("repo").notNull(),
+    repoInfo: jsonb("repoInfo").notNull().default({}),
+    githubUser: text("github_user").notNull(),
+    userContribution: jsonb("userContribution").notNull().default({}),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [
+    unique("repo_github_user_unique").on(table.repo, table.githubUser),
+  ],
+);
 export const gitUserCache = pgTable("gitUserCache", {
   id: uuid("id").primaryKey().defaultRandom(),
   targetUser: text("target_user").notNull().unique(),
