@@ -1,16 +1,17 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { loginUser, registerUser } from "./service";
+import { DbOrTx, loginUser, registerUser } from "./service";
 import { verifyAuthToken } from "./jwt";
 import { db } from "@/db";
 import { users } from "@/db/schema";
+import { RequireOwner } from "./guard";
 
 export async function handleLoginAction(username: string, password: string) {
   try {
     const result = await loginUser(username, password);
     await SaveToken(result, username);
-    return { success: true, data: result };
+    return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
   }
@@ -20,22 +21,53 @@ export async function handleRegisterAction(
   username: string,
   email: string,
   password: string,
-  logUserIn: boolean = true,
-  ignoreOccupied: boolean = false,
 ) {
   try {
-    const isOccupied = await hasOwner();
-    if (isOccupied && !ignoreOccupied)
-      return { success: false, error: "Access denied!" };
-    const result = await registerUser(username, email, password);
-    if (logUserIn) {
-      await SaveToken(result, username);
-    }
-    return { success: true, data: result };
+    const token = await db.transaction(async (tx) => {
+      if (await hasOwner(tx)) throw new Error("Access denied!");
+      return await registerUser(username, email, password, tx);
+    });
+
+    await SaveToken(token, username);
+
+    return { success: true };
   } catch (error: any) {
+    if (error?.message === "Access denied!" || error?.code === "23505") {
+      return { success: false, error: "Access denied!" };
+    }
+
     return {
       success: false,
-      error: error.message || "Registration failed. Please try again.",
+      error: "Registration failed.",
+    };
+  }
+}
+
+export async function handleCreateUserAction(
+  username: string,
+  email: string,
+  password: string,
+) {
+  try {
+    await RequireOwner();
+
+    await db.transaction(async (tx) => {
+      await registerUser(username, email, password, tx);
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    if (error?.code === "23505") {
+      return { success: false, error: "Username or email already exists." };
+    }
+
+    if (error?.message === "Access denied!") {
+      return { success: false, error: "Access denied!" };
+    }
+
+    return {
+      success: false,
+      error: "Failed to create user.",
     };
   }
 }
@@ -74,7 +106,7 @@ export async function getAuthenticatedUser() {
   return payload;
 }
 
-export async function hasOwner() {
+export async function hasOwner(tx: DbOrTx = db) {
   try {
     const existingUsers = await db.select().from(users).limit(1);
     const isOccupied = existingUsers.length > 0;

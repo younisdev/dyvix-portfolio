@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import AdminAuthShell from "../../components/admin/AdminAuthShell";
 import React from "react";
 import { DyvixModal, DyvixModalOverride, dyvixToast } from "dyvix-ui";
-import { handleRegisterAction } from "@/auth/actions";
+import { handleCreateUserAction, handleRegisterAction } from "@/auth/actions";
 import { GetPresetsCount, GetRepoCachCount, GetUsersCount } from "@/service";
 const MODAL_OVERRIDES = {
   "--dyvix-modal-backdrop-filter": "blur(8px)",
@@ -151,12 +151,10 @@ export default function AdminPage() {
       {showRegisterModal && (
         <DyvixModal
           onSubmit={async (data) => {
-            const res = await handleRegisterAction(
+            const res = await handleCreateUserAction(
               `${data["First Name"]} ${data["Last Name"]}`,
               data["email"],
               data["password"],
-              false,
-              true,
             );
 
             if (!res.success) {

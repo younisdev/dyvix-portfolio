@@ -9,6 +9,7 @@ import {
   users,
 } from "./db/schema";
 import { getAuthenticatedUser } from "./auth/actions";
+import { RequireOwner } from "./auth/guard";
 
 export async function getPresetData() {
   try {
@@ -28,6 +29,7 @@ export async function deletePreset(
   presetId: string,
 ): Promise<{ success: boolean; data: string }> {
   try {
+    await RequireOwner();
     const [deleted] = await db
       .delete(configProfiles)
       .where(eq(configProfiles.id, presetId))
@@ -112,6 +114,7 @@ export async function perfomSavePreset(
 
 export async function performPresetActivation(presetId: string) {
   try {
+    await RequireOwner();
     const isDeactivated = await deactivePresets();
 
     if (!isDeactivated.success) {
@@ -135,6 +138,7 @@ export async function performPresetActivation(presetId: string) {
 }
 export async function performPresetDeactivation(presetId: string) {
   try {
+    await RequireOwner();
     const [updatedPreset] = await db
       .update(configProfiles)
       .set({ isActive: false, updatedAt: new Date() })
@@ -153,6 +157,7 @@ export async function performPresetDeactivation(presetId: string) {
 
 export async function deactivePresets() {
   try {
+    await RequireOwner();
     await db
       .update(configProfiles)
       .set({ isActive: false, updatedAt: new Date() })
