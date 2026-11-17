@@ -37,45 +37,45 @@
 
 1. **Clone the repository**
 
-    ```bash
-    git clone https://github.com/younisdev/dyvix-portfolio.git
-    cd dyvix-portfolio
-    ```
+   ```bash
+   git clone https://github.com/younisdev/dyvix-portfolio.git
+   cd dyvix-portfolio
+   ```
 
 2. **Install the dependencies**
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 3. **Configure environment variables**
 
-    Create a .env.local file in the root directory and add your credentials.
-  
-    ```env
-    DATABASE_URL="postgresql://user:password@localhost:5432/DATABASENAME"
-    JWT_SECRET="YOUR_SECRET_PASSWORD"
-    ```
-    
-    - DATABASE_URL: Your PostgreSQL connection string.
-    
-    - JWT_SECRET: A strong, randomly generated secret key (at least 16 characters).
-    
-    > **Note:** Never commit or share your environment variables.
+   Create a .env.local file in the root directory and add your credentials.
+
+   ```env
+   DATABASE_URL="postgresql://user:password@localhost:5432/DATABASENAME"
+   JWT_SECRET="YOUR_SECRET_PASSWORD"
+   ```
+
+   - DATABASE_URL: Your PostgreSQL connection string.
+
+   - JWT_SECRET: A strong, randomly generated secret key (at least 16 characters).
+
+   > **Note:** Never commit or share your environment variables.
 
 4. **Push the database schema**
 
-    ```bash
-    npm run db:push
-    ```
+   ```bash
+   npm run db:push
+   ```
 
 5. **Start the development server**
 
-    ```bash
-    npm run dev
-    ```
+   ```bash
+   npm run dev
+   ```
 
-    Open the local URL provided in your terminal (usually http://localhost:3000).
+   Open the local URL provided in your terminal (usually http://localhost:3000).
 
 ### Guide
 

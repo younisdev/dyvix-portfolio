@@ -78,4 +78,3 @@ Check [GUIDE.md](./GUIDE.md) for instructions on customizing your portfolio, cre
 4. Reference the related issue when your PR addresses an existing issue.
 5. Avoid opening more than 3–4 PRs simultaneously unless they are small and focused. Wait for reviews before opening additional PRs. A large number of concurrent PRs can make reviewing difficult and slow down maintenance.
 6. **Respect PR assignments and existing work.** If someone has already been assigned to an issue or has communicated that they are actively working on it, avoid submitting a competing PR without discussing it with the maintainers first.
-7. 

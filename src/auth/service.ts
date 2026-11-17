@@ -29,13 +29,16 @@ export async function loginUser(username: string, password: string) {
 
   return token;
 }
+export type DbOrTx =
+  typeof db | Parameters<Parameters<typeof db.transaction>[0]>[0];
 
 export async function registerUser(
   username: string,
   email: string,
   password: string,
+  tx: DbOrTx = db,
 ) {
-  const [existingUser] = await db
+  const [existingUser] = await tx
     .select()
     .from(users)
     .where(or(eq(users.username, username), eq(users.email, email)))
@@ -50,7 +53,7 @@ export async function registerUser(
 
   const hashedpassword = await hashPassword(password);
 
-  const [newUser] = await db
+  const [newUser] = await tx
     .insert(users)
     .values({
       username: username,
