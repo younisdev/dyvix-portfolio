@@ -269,18 +269,23 @@ export async function fetchRepoData(repo: string, targetUser: string) {
     return cachedData;
   }
 
+  const token = process.env.GITHUB_TOKEN;
+
   const gitHeaders = {
     "X-GitHub-Api-Version": "2022-11-28",
     Accept: "application/vnd.github+json",
     "User-Agent": "Portfolio-App",
+    ...(token ? {Authorization: `Bearer ${token}`}: {})
   };
   try {
     const [repoDataRes, prDataRes, commitDataRes] = await Promise.all([
-      fetch(`https://api.github.com/repos/${repo}`),
+      fetch(`https://api.github.com/repos/${repo}`, {
+        headers: gitHeaders
+      }),
       fetch(
         `https://api.github.com/search/issues?q=type:pr+author:${targetUser}+repo:${repo}`,
         {
-          headers: gitHeaders,
+          headers: gitHeaders
         },
       ),
       fetch(
@@ -288,7 +293,7 @@ export async function fetchRepoData(repo: string, targetUser: string) {
         {
           headers: {
             ...gitHeaders,
-            Accept: "application/vnd.github.cloak-preview+json",
+            Accept: "application/vnd.github.cloak-preview+json"
           },
         },
       ),
@@ -308,6 +313,7 @@ export async function fetchRepoData(repo: string, targetUser: string) {
     await CacheContributionData({ repo: repo, user: targetUser }, data, "repo");
     return data;
   } catch (err) {
+    console.log(err)
     throw new Error("Failed to establish connectiong with git.");
   }
 }
