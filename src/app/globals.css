@@ -214,7 +214,7 @@ body {
     --dyvix-contribution-role-color,
     var(--dyvix-contribution-color, oklch(67.3% 0.182 276.935))
   );
-  margin-left: 0.3rem;
+  margin-left: 0.1rem;
 }
 .contribution-item .contribution-path {
   color: var(--dyvix-contribution-color, white);
