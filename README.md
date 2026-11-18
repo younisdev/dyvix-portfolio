@@ -55,11 +55,14 @@
    ```env
    DATABASE_URL="postgresql://user:password@localhost:5432/DATABASENAME"
    JWT_SECRET="YOUR_SECRET_PASSWORD"
+   GITHUB_TOKEN="YOUR_GITHUB_TOKEN" # optional for higher rate limits
    ```
 
    - DATABASE_URL: Your PostgreSQL connection string.
 
    - JWT_SECRET: A strong, randomly generated secret key (at least 16 characters).
+
+   - GITHUB_TOKEN: Your account GITHUB token; allows you to add more repositories to your portfolio without rate limits.
 
    > **Note:** Never commit or share your environment variables.
 
